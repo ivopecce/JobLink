@@ -3,6 +3,9 @@ package it.univaq.disim.oop.joblink.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.univaq.disim.oop.joblink.domain.Azienda;
+import it.univaq.disim.oop.joblink.domain.Persona;
+import it.univaq.disim.oop.joblink.domain.Utente;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,12 +17,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
-public class LayoutController implements Initializable {
+public class LayoutController implements Initializable, DataInitializable<Utente> {
 
 	private static final MenuElement MENU_HOME = new MenuElement("Home", "home");
 
 	private static final MenuElement[] MENU_AZIENDA = { new MenuElement("Gestione Offerte di lavoro", "offerte"),
-			new MenuElement("Ricerca utenti", "piani"), new MenuElement("Candidature", "candidature"), new MenuElement("Chat", "chat") };
+			new MenuElement("Ricerca utenti attinenti", "attinenti"), new MenuElement("Candidature", "candidature"), 
+			new MenuElement("Chat", "chat") };
+	private static final MenuElement[] MENU_PERSONA = { new MenuElement("Profilo", "profilo"), 
+			new MenuElement("Ricerca offerte", "ricercaOfferte"), new MenuElement("Visualizza offerte di lavoro", "visualizzaOfferte"),
+			new MenuElement("Gestione candidature", "candidature"), new MenuElement("Chat", "chat") };
+			
+	private Utente utente;
+	
 	@FXML
 	private VBox menuBar;
 	
@@ -30,16 +40,27 @@ public class LayoutController implements Initializable {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {}
+
+	@Override
+	public void initializeData(Utente utente) {
+		this.utente = utente;
 		menuBar.getChildren().addAll(createButton(MENU_HOME));
 		menuBar.getChildren().add(new Separator());
-		for (MenuElement menu : MENU_AZIENDA) {
-			menuBar.getChildren().add(createButton(menu));
+		if(utente instanceof Azienda) {
+			for(MenuElement menu : MENU_AZIENDA) {
+				menuBar.getChildren().add(createButton(menu));
+			}
+		}
+		if(utente instanceof Persona) {
+			for(MenuElement menu : MENU_PERSONA) {
+				menuBar.getChildren().add(createButton(menu));
+			}
 		}
 	}
-
+	
 	@FXML
-	public void esciAction(MouseEvent event) {
+	public void logoutAction(MouseEvent event) {
 		dispatcher.logout();
 		
 	}
@@ -53,7 +74,7 @@ public class LayoutController implements Initializable {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				dispatcher.renderView(viewItem.getVista());
+				dispatcher.renderView(viewItem.getVista(), utente);
 			}
 		});
 		return button;

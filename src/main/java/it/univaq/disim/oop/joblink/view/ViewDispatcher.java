@@ -2,6 +2,8 @@ package it.univaq.disim.oop.joblink.view;
 
 import java.io.IOException;
 
+import it.univaq.disim.oop.joblink.controller.DataInitializable;
+import it.univaq.disim.oop.joblink.domain.Utente;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,28 +29,29 @@ public class ViewDispatcher {
 
 	public void loginView(Stage stage) throws ViewException {
 		this.stage = stage;
-		Parent loginView = loadView("login");
+		Parent loginView = loadView("login").getView();
 		Scene scene = new Scene(loginView);
 		stage.setScene(scene);
 		stage.show();
 	}
 
-	public void loggedIn() {
+	public void loggedIn(Utente utente) {
 		try {
-			layout = (BorderPane) loadView("layout");
-			Parent home = loadView("home");
-			layout.setCenter(home);
+			View<Utente> layoutView = loadView("layout");
+			DataInitializable<Utente> layoutController = layoutView.getController();
+			layoutController.initializeData(utente);
+			layout = (BorderPane) layoutView.getView();
+			renderView("home", utente);
 			Scene scene = new Scene(layout);
 			stage.setScene(scene);			
 		} catch (ViewException e) {
-			e.printStackTrace();
 			renderError(e);
 		}
 	}
 
 	public void logout() {
 		try {
-			Parent loginView = loadView("login");
+			Parent loginView = loadView("login").getView();
 			Scene scene = new Scene(loginView);
 			stage.setScene(scene);
 		} catch (ViewException e) {
@@ -56,29 +59,31 @@ public class ViewDispatcher {
 		}
 	}
 
-	public void renderView(String viewName) {
+	public <T> void renderView(String viewName, T data) {
 		try {
-			Parent view = loadView(viewName);
-			layout.setCenter(view);
+			View<T> view = loadView(viewName);
+			DataInitializable<T> controller = view.getController();
+			controller.initializeData(data);
+			layout.setCenter(view.getView());
 		} catch (ViewException e) {
 			renderError(e);
 		}
 	}
 	
-	private void renderError(ViewException e) {
+	public void renderError(Exception e) {
 		e.printStackTrace();
 		System.exit(1);
 	}
 
-	private Parent loadView(String view) throws ViewException {
+	private <T> View<T> loadView(String viewName) throws ViewException {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(RESOURCE_BASE + view + FXML_SUFFIX));
-			return loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new ViewException(e);
-		}
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(RESOURCE_BASE + viewName + FXML_SUFFIX));
+			Parent parent = (Parent) loader.load();
+			return new View<>(parent, loader.getController());
 
+		} catch (IOException ex) {
+			throw new ViewException(ex);
+		}
 	}
 
 }

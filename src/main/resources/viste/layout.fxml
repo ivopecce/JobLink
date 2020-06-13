@@ -20,7 +20,7 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <Separator orientation="VERTICAL" prefHeight="93.0" prefWidth="660.0" visible="false" />
+            <Separator orientation="VERTICAL" prefHeight="93.0" prefWidth="784.0" visible="false" />
             <ImageView fx:id="logoutButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#logoutAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@exit.png" />
