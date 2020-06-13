@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.disim.oop.joblink.controller.LayoutController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="103.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: #76b1b5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="113.0" prefWidth="144.0" text="JobLink" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+            <Separator orientation="VERTICAL" prefHeight="93.0" prefWidth="660.0" visible="false" />
+            <ImageView fx:id="logoutButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#logoutAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@exit.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </HBox>
+   </top>
+   <right>
+      <VBox fx:id="menuBar" prefHeight="440.0" prefWidth="164.0" style="-fx-background-color: #76b1c3;" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
