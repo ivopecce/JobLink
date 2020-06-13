@@ -1,6 +1,10 @@
 package it.univaq.disim.oop.joblink;
 
+import it.univaq.disim.oop.joblink.view.ViewDispatcher;
+import it.univaq.disim.oop.joblink.view.ViewException;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -14,12 +18,19 @@ public class JobLink extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+		
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/viste/login.fxml"));
+//		Parent login = loader.load();
+//		Scene scene = new Scene(login);
+//        stage.setScene(scene);
+//        stage.show();
+		
+		try {
+			ViewDispatcher viewDispatcher = ViewDispatcher.getInstance();
+			viewDispatcher.loginView(stage);
+		} catch (ViewException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
