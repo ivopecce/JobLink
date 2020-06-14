@@ -147,6 +147,7 @@ CREATE TABLE `Offerta` (
   `titoloOfferta` varchar(100) NOT NULL,
   `testoOfferta` text NOT NULL,
   `localita` varchar(45) DEFAULT NULL,
+  `stato` tinyint NOT NULL,
   `idAzienda` int NOT NULL,
   PRIMARY KEY (`idOfferta`),
   KEY `idAzienda_idx` (`idAzienda`),
@@ -340,4 +341,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-13 21:45:39
+-- Dump completed on 2020-06-14  8:48:30
