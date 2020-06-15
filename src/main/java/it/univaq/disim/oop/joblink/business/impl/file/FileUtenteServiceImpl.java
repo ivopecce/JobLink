@@ -14,14 +14,19 @@ import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Utente;
 
 public class FileUtenteServiceImpl implements UtenteService {
-	private static final String REPOSITORY_BASE = "src" + File.separator + "main" + File.separator + "resources"
-			+ File.separator + "dati";
-	private static final String UTENTI_FILE_NAME = REPOSITORY_BASE + File.separator + "utenti.txt";
+//	private static final String REPOSITORY_BASE = "src" + File.separator + "main" + File.separator + "resources"
+//			+ File.separator + "dati";
+//	private static final String UTENTI_FILE_NAME = REPOSITORY_BASE + File.separator + "utenti.txt";
 
+	private String utentiFileName;
+	
+	public FileUtenteServiceImpl(String utentiFileName) {
+		this.utentiFileName = utentiFileName;
+	}
 	@Override
 	public Utente authenticate(String username, String password) throws UtenteNotFoundException, BusinessException {
 		try {
-			FileData filedata = Utility.readAllRows(UTENTI_FILE_NAME);
+			FileData filedata = Utility.readAllRows(utentiFileName);
 			for(String[] colonne : filedata.getRighe()) {
 				if((colonne[1].equals(username)) && colonne[2].contentEquals(password)) {
 					Utente utente = null;

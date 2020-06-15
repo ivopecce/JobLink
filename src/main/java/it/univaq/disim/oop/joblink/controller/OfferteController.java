@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
+import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.business.impl.file.FileOffertaServiceImpl;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMOffertaServiceImpl;
@@ -52,7 +53,9 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	public OfferteController() {
 		dispatcher = ViewDispatcher.getInstance();
 //		offertaService = new RAMOffertaServiceImpl();
-		offertaService = new FileOffertaServiceImpl();
+//		offertaService = new FileOffertaServiceImpl();
+		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
+		offertaService = factory.getOffertaService();
 	}
 
 	@Override

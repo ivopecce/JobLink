@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
+import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.UtenteNotFoundException;
 import it.univaq.disim.oop.joblink.business.UtenteService;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMUtenteServiceImpl;
@@ -36,7 +37,9 @@ public class LoginController implements Initializable, DataInitializable<Object>
 	public LoginController() {
 		dispatcher = ViewDispatcher.getInstance();
 //		utenteService = new RAMUtenteServiceImpl();
-		utenteService = new FileUtenteServiceImpl();
+//		utenteService = new FileUtenteServiceImpl();
+		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
+		utenteService = factory.getUtenteService();
 		
 	}
 	

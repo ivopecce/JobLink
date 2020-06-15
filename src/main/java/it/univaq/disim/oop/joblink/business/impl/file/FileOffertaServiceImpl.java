@@ -19,15 +19,19 @@ import it.univaq.disim.oop.joblink.domain.StatoOfferta;
 
 
 public class FileOffertaServiceImpl implements OffertaService {
-	private static final String REPOSITORY_BASE = "src" + File.separator + "main" + File.separator + "resources"
-			+ File.separator + "dati";
-	private static final String OFFERTE_FILE_NAME = REPOSITORY_BASE + File.separator + "offerte.txt";
+//	
+
+	private String offerteFileName;
+	
+	public FileOffertaServiceImpl(String offerteFileName) {
+		this.offerteFileName = offerteFileName;
+	}
 
 	@Override
 	public List<Offerta> findAllOfferte(Azienda azienda) throws BusinessException {
 		List<Offerta> result = new ArrayList<>();
 		try {
-			FileData fileData = Utility.readAllRows(OFFERTE_FILE_NAME);
+			FileData fileData = Utility.readAllRows(offerteFileName);
 			for(String[] colonne : fileData.getRighe()) {
 				Offerta offerta = new Offerta();
 				offerta.setId(Integer.parseInt(colonne[0]));
@@ -59,8 +63,8 @@ public class FileOffertaServiceImpl implements OffertaService {
 	@Override
 	public void createOfferta(Offerta offerta) throws BusinessException {
 		try {
-			FileData fileData = Utility.readAllRows(OFFERTE_FILE_NAME);
-			try(PrintWriter writerPrintWriter = new PrintWriter(new File(OFFERTE_FILE_NAME))){
+			FileData fileData = Utility.readAllRows(offerteFileName);
+			try(PrintWriter writerPrintWriter = new PrintWriter(new File(offerteFileName))){
 				long contatore = fileData.getContatore();
 				writerPrintWriter.println(contatore+1);
 				for(String[] righe : fileData.getRighe()) {
@@ -98,8 +102,8 @@ public class FileOffertaServiceImpl implements OffertaService {
 	@Override
 	public void updateOfferta(Offerta offerta) throws BusinessException {
 		try {
-			FileData fileData = Utility.readAllRows(OFFERTE_FILE_NAME);
-			try (PrintWriter writerPrintWriter = new PrintWriter(new File(OFFERTE_FILE_NAME))) {
+			FileData fileData = Utility.readAllRows(offerteFileName);
+			try (PrintWriter writerPrintWriter = new PrintWriter(new File(offerteFileName))) {
 				writerPrintWriter.println(fileData.getContatore());
 				for (String[] righe : fileData.getRighe()) {
 					if (Long.parseLong(righe[0]) == offerta.getId()) {
@@ -141,7 +145,7 @@ public class FileOffertaServiceImpl implements OffertaService {
 	public Offerta findOffertaById(int id) throws BusinessException {
 		Offerta result = new Offerta();
 		try {
-			FileData fileData = Utility.readAllRows(OFFERTE_FILE_NAME);
+			FileData fileData = Utility.readAllRows(offerteFileName);
 			for (String[] colonne : fileData.getRighe()) {
 				if (Integer.parseInt(colonne[0]) == id) {
 					result.setId(id);
