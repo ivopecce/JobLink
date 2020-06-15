@@ -9,6 +9,7 @@ import it.univaq.disim.oop.joblink.business.UtenteService;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMUtenteServiceImpl;
 import it.univaq.disim.oop.joblink.domain.Utente;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
+import it.univaq.disim.oop.joblink.business.impl.file.FileUtenteServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +35,8 @@ public class LoginController implements Initializable, DataInitializable<Object>
 	
 	public LoginController() {
 		dispatcher = ViewDispatcher.getInstance();
-		utenteService = new RAMUtenteServiceImpl();
+//		utenteService = new RAMUtenteServiceImpl();
+		utenteService = new FileUtenteServiceImpl();
 		
 	}
 	

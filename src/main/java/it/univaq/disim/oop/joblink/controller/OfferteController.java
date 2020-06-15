@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.OffertaService;
+import it.univaq.disim.oop.joblink.business.impl.file.FileOffertaServiceImpl;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMOffertaServiceImpl;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMUtenteServiceImpl;
 import it.univaq.disim.oop.joblink.domain.Azienda;
@@ -50,7 +51,8 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	
 	public OfferteController() {
 		dispatcher = ViewDispatcher.getInstance();
-		offertaService = new RAMOffertaServiceImpl();
+//		offertaService = new RAMOffertaServiceImpl();
+		offertaService = new FileOffertaServiceImpl();
 	}
 
 	@Override
@@ -64,18 +66,20 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 			}
 		});
 		
-		statoTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,String>, ObservableValue<String>>() {
-
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Offerta, String> param) {
-				if(param.getValue().getStato().equals(StatoOfferta.ATTIVA)) {
-					return new SimpleStringProperty("Attiva");
-				}
-				else return new SimpleStringProperty("Non attiva");
-			}
+		statoTableColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
 		
-		
-		});
+//		statoTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,String>, ObservableValue<String>>() {
+//
+//			@Override
+//			public ObservableValue<String> call(CellDataFeatures<Offerta, String> param) {
+//				if(param.getValue().getStato().equals(StatoOfferta.ATTIVA)) {
+//					return new SimpleStringProperty("Attiva");
+//				}
+//				else return new SimpleStringProperty("Non attiva");
+//			}
+//		
+//		
+//		});
 		
 		azioniTableColumn.setStyle("-fx-alignment: CENTER;");
 		azioniTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,Button>, ObservableValue<Button>>() {

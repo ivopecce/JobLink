@@ -57,6 +57,12 @@ public class RAMOffertaServiceImpl implements OffertaService {
 		}
 		
 	}
+
+	@Override
+	public Offerta findOffertaById(int id) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
