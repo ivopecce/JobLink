@@ -47,6 +47,8 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	@FXML
 	private TableColumn<Offerta, Button> azioniTableColumn;
 	
+	private Azienda azienda;
+	
 	private ViewDispatcher dispatcher;
 	private OffertaService offertaService;
 	
@@ -107,6 +109,7 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	
 	@Override
 	public void initializeData(Azienda azienda) {
+		this.azienda = azienda;
 		try {
 			List<Offerta> offerte = offertaService.findAllOfferte(azienda);
 			ObservableList<Offerta> offerteData = FXCollections.observableArrayList(offerte);
@@ -121,11 +124,10 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 		Offerta offerta = new Offerta();
 		offerta.setTitoloOfferta("[Inserisci titolo offerta]");
 		offerta.setTestoOfferta("[Inserisci il testo dell'offerta]");
-//		Il metodo in basso `e poi da modificare con l'id di sessione quando verra` implementato
-		offerta.setAzienda(new Azienda());
+		offerta.setAzienda(azienda);
 		offerta.setLocalita("[Inserisci localita`]");
 		Date oggi = Calendar.getInstance().getTime();
-		offerta.setDataCreazione(oggi.getYear(), oggi.getMonth(), oggi.getDay());
+		offerta.setDataCreazione(oggi);
 		dispatcher.renderView("offerta", offerta);
 	}
 }

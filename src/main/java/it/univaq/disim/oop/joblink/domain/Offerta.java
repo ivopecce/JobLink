@@ -1,11 +1,13 @@
 package it.univaq.disim.oop.joblink.domain;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Offerta {
 	private Integer id;
-	private Calendar dataCreazione;
+	private Date dataCreazione;
 	private String titoloOfferta;
 	private String testoOfferta;
 	private String localita;
@@ -21,15 +23,12 @@ public class Offerta {
 		this.id = id;
 	}
 
-	public Calendar getDataCreazione() {
+	public Date getDataCreazione() {
 		return dataCreazione;
 	}
 
-	public void setDataCreazione(int anno, int mese, int giorno) {
-		this.dataCreazione = new GregorianCalendar();
-		this.dataCreazione.set(Calendar.YEAR, anno);
-		this.dataCreazione.set(Calendar.MONTH, mese);
-		this.dataCreazione.set(Calendar.DAY_OF_MONTH, giorno);
+	public void setDataCreazione(Date date) {
+		this.dataCreazione = date;
 	}
 
 	public String getTitoloOfferta() {

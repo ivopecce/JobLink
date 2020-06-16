@@ -12,7 +12,7 @@ public class DBConnector {
 	
 	private Connection con;
 	
-	private Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException {
 		if(con == null) {
 			MysqlDataSource dataSource = new MysqlDataSource();
 			dataSource.setDatabaseName("joblink");

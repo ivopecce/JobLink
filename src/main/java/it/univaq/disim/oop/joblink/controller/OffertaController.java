@@ -1,6 +1,7 @@
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -72,10 +73,8 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 			offerta.setTitoloOfferta(titolo.getText());
 			offerta.setTestoOfferta(testo.getText());
 			offerta.setLocalita(localita.getText());
-//			Metodo in basso da modificare con id sessione
-			offerta.setAzienda(new Azienda());
-			Date oggi = Calendar.getInstance().getTime();
-			offerta.setDataCreazione(oggi.getYear(), oggi.getMonth(), oggi.getDay());
+			Date oggi = new Date(System.currentTimeMillis());
+			offerta.setDataCreazione(oggi);
 			offerta.setStato(statoOfferta.getValue());
 			
 			if(offerta.getId() == null) {
