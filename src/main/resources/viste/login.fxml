@@ -22,5 +22,7 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button fx:id="registraAziendaButton" layoutX="424.0" layoutY="580.0" mnemonicParsing="false" onAction="#registraAziendaAction" text="Registrati come azienda" />
+      <Button fx:id="registraPersonaButton" layoutX="423.0" layoutY="618.0" mnemonicParsing="false" onAction="#registraPersonaAction" text="Registrati come persona" />
    </children>
 </AnchorPane>

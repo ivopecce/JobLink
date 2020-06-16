@@ -5,6 +5,7 @@ import java.util.Calendar;
 public class Formazione {
 	private Integer id;
 	private String titolo;
+	private String descrizione;
 	private String istituto;
 	private Calendar dataInizio;
 	private Calendar dataFine;
@@ -26,6 +27,14 @@ public class Formazione {
 
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	public String getIstituto() {

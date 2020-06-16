@@ -70,7 +70,7 @@ public class LayoutController implements Initializable, DataInitializable<Utente
 		button.setStyle("-fx-background-color: transparent; -fx-font-size: 14;");
 		button.setTextFill(Paint.valueOf("white"));
 		button.setPrefHeight(10);
-		button.setPrefWidth(180);
+		button.setPrefWidth(260);
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

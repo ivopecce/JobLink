@@ -39,6 +39,6 @@
       </HBox>
    </top>
    <right>
-      <VBox fx:id="menuBar" prefHeight="440.0" prefWidth="164.0" style="-fx-background-color: #76b1c3;" BorderPane.alignment="CENTER" />
+      <VBox fx:id="menuBar" prefHeight="665.0" prefWidth="221.0" style="-fx-background-color: #76b1c3;" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

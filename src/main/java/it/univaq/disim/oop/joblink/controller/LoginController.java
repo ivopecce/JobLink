@@ -10,6 +10,7 @@ import it.univaq.disim.oop.joblink.business.UtenteService;
 import it.univaq.disim.oop.joblink.business.impl.ram.RAMUtenteServiceImpl;
 import it.univaq.disim.oop.joblink.domain.Utente;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
+import it.univaq.disim.oop.joblink.view.ViewException;
 import it.univaq.disim.oop.joblink.business.impl.file.FileUtenteServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,10 @@ public class LoginController implements Initializable, DataInitializable<Object>
 	private Label loginErrorLabel;
 	@FXML
 	private Button loginButton;
+	@FXML
+	private Button registraAziendaButton;
+	@FXML
+	private Button registraPersonaButton;
 	
 	private UtenteService utenteService;
 	
@@ -66,6 +71,24 @@ public class LoginController implements Initializable, DataInitializable<Object>
 			dispatcher.renderError(e);
 		}
 
+	}
+	
+	@FXML
+	public void registraAziendaAction(ActionEvent event) {
+		try {
+			dispatcher.registraView("registraAzienda");
+		} catch (ViewException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void registraPersonaAction(ActionEvent event) {
+		try {
+			dispatcher.registraView("registraPersona");
+		} catch (ViewException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package it.univaq.disim.oop.joblink.domain;
 public class Possiede {
 	private Persona persona;
 	private Skill skill;
+	private LivelloSkill livelloPosseduto;
 	
 	public Persona getPersona() {
 		return persona;
@@ -15,6 +16,12 @@ public class Possiede {
 	}
 	public void setSkill(Skill skill) {
 		this.skill = skill;
+	}
+	public LivelloSkill getLivelloPosseduto() {
+		return livelloPosseduto;
+	}
+	public void setLivelloPosseduto(LivelloSkill livelloPosseduto) {
+		this.livelloPosseduto = livelloPosseduto;
 	}
 	
 	

@@ -3,6 +3,7 @@ package it.univaq.disim.oop.joblink.domain;
 public class Richiesta {
 	private Offerta offerta;
 	private Skill skill;
+	private LivelloSkill livelloRichiesto;
 	
 	
 	public Offerta getOfferta() {
@@ -16,6 +17,12 @@ public class Richiesta {
 	}
 	public void setSkill(Skill skill) {
 		this.skill = skill;
+	}
+	public LivelloSkill getLivelloRichiesto() {
+		return livelloRichiesto;
+	}
+	public void setLivelloRichiesto(LivelloSkill livelloRichiesto) {
+		this.livelloRichiesto = livelloRichiesto;
 	}
 	
 	

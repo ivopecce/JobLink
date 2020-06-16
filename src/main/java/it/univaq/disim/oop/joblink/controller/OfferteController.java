@@ -1,6 +1,8 @@
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,8 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	private TableColumn<Offerta, String> statoTableColumn;
 	@FXML
 	private TableColumn<Offerta, Button> azioniTableColumn;
+	@FXML
+	private TableColumn<Offerta, SimpleDateFormat> dataInserimentoTableColumn;
 	
 	private Azienda azienda;
 	
@@ -73,18 +77,7 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 		
 		statoTableColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
 		
-//		statoTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,String>, ObservableValue<String>>() {
-//
-//			@Override
-//			public ObservableValue<String> call(CellDataFeatures<Offerta, String> param) {
-//				if(param.getValue().getStato().equals(StatoOfferta.ATTIVA)) {
-//					return new SimpleStringProperty("Attiva");
-//				}
-//				else return new SimpleStringProperty("Non attiva");
-//			}
-//		
-//		
-//		});
+		dataInserimentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataCreazione"));
 		
 		azioniTableColumn.setStyle("-fx-alignment: CENTER;");
 		azioniTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,Button>, ObservableValue<Button>>() {

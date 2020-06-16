@@ -11,8 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.domain.Azienda;
@@ -102,7 +100,6 @@ public class DBOffertaServiceImpl implements OffertaService {
 			ps.setString(2, offerta.getTitoloOfferta());
 			ps.setString(3, offerta.getTestoOfferta());
 			ps.setString(4, offerta.getLocalita());
-//			ps.setString(5, offerta.getStato().toString());
 			if(offerta.getStato().equals(StatoOfferta.ATTIVA)) ps.setString(5, "ATTIVA");
 			if(offerta.getStato().equals(StatoOfferta.NON_ATTIVA)) ps.setString(5, "NON_ATTIVA");
 			ps.setInt(6, offerta.getAzienda().getId());
@@ -131,6 +128,20 @@ public class DBOffertaServiceImpl implements OffertaService {
 			throw new BusinessException(e);
 		}
 
+	}
+
+	@Override
+	public void deleteOfferta(Offerta offerta) throws BusinessException {
+		try {
+			String sql = "DELETE FROM Offerta WHERE idOfferta=?;";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, offerta.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
 	}
 
 }

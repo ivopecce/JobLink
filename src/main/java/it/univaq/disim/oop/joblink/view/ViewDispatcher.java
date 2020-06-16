@@ -59,6 +59,16 @@ public class ViewDispatcher {
 			renderError(e);
 		}
 	}
+	
+	public void registraView(String viewToLoad) throws ViewException {
+		try {
+			Parent registraView = loadView(viewToLoad).getView();
+			Scene scene = new Scene(registraView);
+			stage.setScene(scene);
+		} catch (ViewException e) {
+			renderError(e);
+		}
+	}
 
 	public <T> void renderView(String viewName, T data) {
 		try {

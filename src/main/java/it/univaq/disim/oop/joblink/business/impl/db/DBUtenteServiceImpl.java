@@ -1,7 +1,7 @@
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,6 +84,56 @@ public class DBUtenteServiceImpl implements UtenteService {
 			e.printStackTrace();
 			throw new BusinessException(e);
 		}
+	}
+
+	@Override
+	public void registerAzienda(String username, String password, String email, String telefono, String denominazione,
+			String sede, String settore, String sitoweb, Integer dipendenti) throws BusinessException {
+		String sql = "CALL registerAzienda(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, email);
+			ps.setString(4, telefono);
+			ps.setString(5, denominazione);
+			ps.setString(6, sede);
+			ps.setString(7, settore);
+			ps.setString(8, sitoweb);
+			ps.setInt(9, dipendenti);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
+		
+		
+	}
+
+	@Override
+	public void registerPersona(String username, String password, String email, String telefono, String cognome,
+			String nome, java.sql.Date dataDiNascita, String genere, String residenza) throws BusinessException {
+		String sql = "CALL registerPersona(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, email);
+			ps.setString(4, telefono);
+			ps.setString(5, cognome);
+			ps.setString(6, nome);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			ps.setString(7, format.format(dataDiNascita));
+			ps.setString(8, genere);
+			ps.setString(9, residenza);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
+		
 	}
 
 }

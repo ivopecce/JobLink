@@ -20,9 +20,6 @@ public class Skill {
 	public LivelloSkill getLivello() {
 		return livello;
 	}
-	public void setLivello(LivelloSkill livello) {
-		this.livello = livello;
-	}
 	
 	
 }

@@ -13,4 +13,6 @@ public interface OffertaService {
 	void createOfferta(Offerta offerta) throws BusinessException;
 
 	void updateOfferta(Offerta offerta) throws BusinessException;
+	
+	void deleteOfferta(Offerta offerta) throws BusinessException;
 }
