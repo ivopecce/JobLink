@@ -1,5 +1,6 @@
 package it.univaq.disim.oop.joblink.domain;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class Formazione {
@@ -7,8 +8,8 @@ public class Formazione {
 	private String titolo;
 	private String descrizione;
 	private String istituto;
-	private Calendar dataInizio;
-	private Calendar dataFine;
+	private LocalDate dataInizio;
+	private LocalDate dataFine;
 	private Integer voto;
 	
 	private Persona persona;
@@ -45,19 +46,19 @@ public class Formazione {
 		this.istituto = istituto;
 	}
 
-	public Calendar getDataInizio() {
+	public LocalDate getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(Calendar dataInizio) {
+	public void setDataInizio(LocalDate dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 
-	public Calendar getDataFine() {
+	public LocalDate getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(Calendar dataFine) {
+	public void setDataFine(LocalDate dataFine) {
 		this.dataFine = dataFine;
 	}
 

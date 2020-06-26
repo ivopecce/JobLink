@@ -1,5 +1,6 @@
 package it.univaq.disim.oop.joblink.domain;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -8,7 +9,7 @@ import java.util.GregorianCalendar;
 public class Persona extends Utente {
 	private String cognome;
 	private String nome;
-	private Calendar dataDiNascita;
+	private LocalDate dataDiNascita;
 	private String genere;
 	private String residenza;
 	
@@ -24,14 +25,11 @@ public class Persona extends Utente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Calendar getDataDiNascita() {
+	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
-	public void setDataDiNascita(int anno, int mese, int giorno) {
-		dataDiNascita = new GregorianCalendar();
-		this.dataDiNascita.set(Calendar.YEAR, anno);
-		this.dataDiNascita.set(Calendar.MONTH, mese);
-		this.dataDiNascita.set(Calendar.DAY_OF_MONTH, giorno);
+	public void setDataDiNascita(LocalDate data) {
+		this.dataDiNascita = data;
 	}
 	public String getGenere() {
 		return genere;

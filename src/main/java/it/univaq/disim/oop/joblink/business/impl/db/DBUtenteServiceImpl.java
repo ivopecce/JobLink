@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.UtenteNotFoundException;
@@ -65,13 +66,10 @@ public class DBUtenteServiceImpl implements UtenteService {
 						utente.setId(rs.getInt(2));
 						((Persona) utente).setCognome(rs.getString(7));
 						((Persona) utente).setNome(rs.getString(8));
-						Date date;
-						try {
-							date = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(9));
-							((Persona) utente).setDataDiNascita(date.getYear(), date.getMonth(), date.getDay());
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
+						LocalDate date;
+						date = LocalDate.parse(rs.getString(9));
+//							date = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(9));
+						((Persona) utente).setDataDiNascita(date);
 						((Persona) utente).setGenere(rs.getString(10));
 						((Persona) utente).setResidenza(rs.getString(11));
 					}
@@ -113,7 +111,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 
 	@Override
 	public void registerPersona(String username, String password, String email, String telefono, String cognome,
-			String nome, java.sql.Date dataDiNascita, String genere, String residenza) throws BusinessException {
+			String nome, LocalDate dataDiNascita, String genere, String residenza) throws BusinessException {
 		String sql = "CALL registerPersona(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
@@ -124,8 +122,9 @@ public class DBUtenteServiceImpl implements UtenteService {
 			ps.setString(4, telefono);
 			ps.setString(5, cognome);
 			ps.setString(6, nome);
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			ps.setString(7, format.format(dataDiNascita));
+//			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//			ps.setString(7, format.format(dataDiNascita));
+			ps.setString(7, dataDiNascita.toString());
 			ps.setString(8, genere);
 			ps.setString(9, residenza);
 			ps.execute();

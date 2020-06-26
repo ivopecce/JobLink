@@ -1,13 +1,14 @@
 package it.univaq.disim.oop.joblink.domain;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class Esperienza {
 	private Integer id;
 	private String titolo;
 	private String azienda;
-	private Calendar dataInizio;
-	private Calendar dataFine;
+	private LocalDate dataInizio;
+	private LocalDate dataFine;
 	private String descrizione;
 	private String localita;
 	
@@ -37,19 +38,19 @@ public class Esperienza {
 		this.azienda = azienda;
 	}
 
-	public Calendar getDataInizio() {
+	public LocalDate getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(Calendar dataInizio) {
+	public void setDataInizio(LocalDate dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 
-	public Calendar getDataFine() {
+	public LocalDate getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(Calendar dataFine) {
+	public void setDataFine(LocalDate dataFine) {
 		this.dataFine = dataFine;
 	}
 

@@ -30,8 +30,12 @@ CREATE TABLE `Azienda` (
   `sede` varchar(45) DEFAULT NULL,
   `numeroDipendenti` int DEFAULT NULL,
   `settore` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idAzienda`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `sitoweb` varchar(45) DEFAULT NULL,
+  `idUtente` int NOT NULL,
+  PRIMARY KEY (`idAzienda`),
+  KEY `idUtente_idx` (`idUtente`),
+  CONSTRAINT `idUtente` FOREIGN KEY (`idUtente`) REFERENCES `Utente` (`idUtente`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +44,7 @@ CREATE TABLE `Azienda` (
 
 LOCK TABLES `Azienda` WRITE;
 /*!40000 ALTER TABLE `Azienda` DISABLE KEYS */;
+INSERT INTO `Azienda` VALUES (1,'Telespazio','Fucino',5000,'Telecomunicazioni','www.telespazio.com',1),(2,'LFoundry','Avezzano',1200,'Elettronico','www.lfoundry.com',3);
 /*!40000 ALTER TABLE `Azienda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,6 +89,7 @@ DROP TABLE IF EXISTS `Formazione`;
 CREATE TABLE `Formazione` (
   `idFormazione` int NOT NULL AUTO_INCREMENT,
   `titolo` varchar(100) NOT NULL,
+  `descrizione` text,
   `istituto` varchar(100) NOT NULL,
   `dataInizio` datetime DEFAULT NULL,
   `dataFine` datetime DEFAULT NULL,
@@ -147,12 +153,12 @@ CREATE TABLE `Offerta` (
   `titoloOfferta` varchar(100) NOT NULL,
   `testoOfferta` text NOT NULL,
   `localita` varchar(45) DEFAULT NULL,
-  `stato` tinyint NOT NULL,
+  `stato` varchar(10) NOT NULL,
   `idAzienda` int NOT NULL,
   PRIMARY KEY (`idOfferta`),
   KEY `idAzienda_idx` (`idAzienda`),
   CONSTRAINT `idAziend` FOREIGN KEY (`idAzienda`) REFERENCES `Azienda` (`idAzienda`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +167,7 @@ CREATE TABLE `Offerta` (
 
 LOCK TABLES `Offerta` WRITE;
 /*!40000 ALTER TABLE `Offerta` DISABLE KEYS */;
+INSERT INTO `Offerta` VALUES (1,'2020-05-01 00:00:00','Tecnico operatore','Si cerca tecnico operatore da inserire in turno. Richiesto diploma','Fucino','ATTIVA',1),(2,'2019-01-05 00:00:00','Specialista networking','Si cerca spcialista in netowrking. Richiesta certificazione CCNA.','Fucino','NON_ATTIVA',1),(4,'2020-06-17 00:00:00','Cercasi carrellista','Si ricerca carrelista da inserire in turno in produzione','Avezzano','ATTIVA',2);
 /*!40000 ALTER TABLE `Offerta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,10 +182,14 @@ CREATE TABLE `Persona` (
   `idPersona` int NOT NULL AUTO_INCREMENT,
   `cognome` varchar(45) NOT NULL,
   `nome` varchar(45) NOT NULL,
-  `dataDiNascita` datetime NOT NULL,
+  `dataDiNascita` date NOT NULL,
   `genere` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idPersona`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `residenza` varchar(45) NOT NULL,
+  `idUtente` int NOT NULL,
+  PRIMARY KEY (`idPersona`),
+  KEY `idUte_idx` (`idUtente`),
+  CONSTRAINT `idUte` FOREIGN KEY (`idUtente`) REFERENCES `Utente` (`idUtente`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,6 +198,7 @@ CREATE TABLE `Persona` (
 
 LOCK TABLES `Persona` WRITE;
 /*!40000 ALTER TABLE `Persona` DISABLE KEYS */;
+INSERT INTO `Persona` VALUES (1,'Pecce','Ivo','1990-10-01','Maschile','Avezzano',2),(2,'Pecce','Ivo','1986-06-19','Maschio','Italia',4);
 /*!40000 ALTER TABLE `Persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,12 +213,13 @@ CREATE TABLE `Possiede` (
   `idPossiede` int NOT NULL AUTO_INCREMENT,
   `idPersona` int NOT NULL,
   `idSkill` int NOT NULL,
+  `livelloPosseduto` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`idPossiede`),
   KEY `idPerson_idx` (`idPersona`),
   KEY `idSkil_idx` (`idSkill`),
   CONSTRAINT `idPer` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `idSkil` FOREIGN KEY (`idSkill`) REFERENCES `Skill` (`idSkill`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +228,7 @@ CREATE TABLE `Possiede` (
 
 LOCK TABLES `Possiede` WRITE;
 /*!40000 ALTER TABLE `Possiede` DISABLE KEYS */;
+INSERT INTO `Possiede` VALUES (1,1,1,'AVANZATO'),(2,1,2,'MEDIO');
 /*!40000 ALTER TABLE `Possiede` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,12 +243,13 @@ CREATE TABLE `Richiesta` (
   `idRichiesta` int NOT NULL AUTO_INCREMENT,
   `idOfferta` int NOT NULL,
   `idSkill` int NOT NULL,
+  `livelloRichiesto` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`idRichiesta`),
   KEY `idOffert_idx` (`idOfferta`),
   KEY `idSkill_idx` (`idSkill`),
   CONSTRAINT `idOffert` FOREIGN KEY (`idOfferta`) REFERENCES `Offerta` (`idOfferta`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `idSkill` FOREIGN KEY (`idSkill`) REFERENCES `Skill` (`idSkill`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,6 +258,7 @@ CREATE TABLE `Richiesta` (
 
 LOCK TABLES `Richiesta` WRITE;
 /*!40000 ALTER TABLE `Richiesta` DISABLE KEYS */;
+INSERT INTO `Richiesta` VALUES (1,1,1,'MEDIO'),(2,2,1,'AVANZATO'),(3,2,2,'BASE');
 /*!40000 ALTER TABLE `Richiesta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,9 +300,8 @@ DROP TABLE IF EXISTS `Skill`;
 CREATE TABLE `Skill` (
   `idSkill` int NOT NULL AUTO_INCREMENT,
   `skill` varchar(45) NOT NULL,
-  `livello` varchar(45) NOT NULL,
   PRIMARY KEY (`idSkill`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,6 +310,7 @@ CREATE TABLE `Skill` (
 
 LOCK TABLES `Skill` WRITE;
 /*!40000 ALTER TABLE `Skill` DISABLE KEYS */;
+INSERT INTO `Skill` VALUES (1,'networking'),(2,'programmazione');
 /*!40000 ALTER TABLE `Skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,11 +324,12 @@ DROP TABLE IF EXISTS `Utente`;
 CREATE TABLE `Utente` (
   `idUtente` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telefono` varchar(45) DEFAULT NULL,
+  `tipologia` varchar(7) NOT NULL,
   PRIMARY KEY (`idUtente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -321,6 +338,7 @@ CREATE TABLE `Utente` (
 
 LOCK TABLES `Utente` WRITE;
 /*!40000 ALTER TABLE `Utente` DISABLE KEYS */;
+INSERT INTO `Utente` VALUES (1,'azienda','azienda','info@telespazio.com','+390863100000','azienda'),(2,'persona','persona','email@esempio.it','+390863000000','persona'),(3,'lfoundry','lfoundry','info@lfoundry.com','+390863222222','azienda'),(4,'ivopecce','ivopecce','test@email.it','+393333333333','persona');
 /*!40000 ALTER TABLE `Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,6 +349,165 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'joblink'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `find_esperienza` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find_esperienza`(_idUtente integer)
+BEGIN
+	SELECT idEsperienza, titolo, azienda, dataInizio, dataFine, descrizione, localita
+    FROM Esperienza
+    WHERE idUtente = _idUtente;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `find_formazione` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find_formazione`(_IDPersona integer)
+BEGIN
+	SELECT idFormazione, titolo, descrizione, istituto, dataInizio, dataFine, voto
+    FROM Formazione
+    WHERE idPersona = _IDPersona;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `find_skill` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find_skill`(_idUtente integer)
+BEGIN
+	SELECT skill.idSkill, skill.skill, possiede.livelloPosseduto
+    FROM Skill INNER JOIN Possiede ON Skill.idSkill = Possiede.idSkill
+    WHERE possiede.idUtente = idUtente;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `login` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login`(_username char(45), _password char(100))
+BEGIN
+	DECLARE _tipologia char(7);
+    SET _tipologia = (SELECT tipologia FROM Utente WHERE username=_username and password=_password);
+    IF _tipologia = "azienda" THEN
+    BEGIN
+		SELECT tipologia, Azienda.idAzienda, username, password, email, telefono, denominazione, sitoweb, sede, settore, numeroDipendenti 
+        FROM (Utente INNER JOIN Azienda ON Utente.idUtente=Azienda.idUtente) WHERE username=_username and password=_password;
+    END;
+    END IF;
+	IF _tipologia = "persona" THEN BEGIN
+		SELECT tipologia, Persona.idPersona, username, password, email, telefono, cognome, nome, dataDiNascita, genere, residenza
+        FROM (Utente INNER JOIN Persona ON Utente.idUtente=Persona.idUtente) WHERE username=_username and password=_password;
+	END;
+	END IF;
+    IF _tipologia = null THEN BEGIN SIGNAL SQLSTATE '45000' SET message_text = "Username o password errati"; END; END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `registerAzienda` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registerAzienda`(_username char(45), _password char(100), _email char(45), _telefono char(45), _denominazione char(45), _sede char(45), _settore char(45), _sitoweb char(45), _dipendenti integer)
+BEGIN
+	DECLARE user_presente char(45);
+    DECLARE ultimoId integer;
+    SET user_presente=(select username from Utente where username=_username);
+    IF(user_presente) THEN
+	BEGIN
+		SIGNAL SQLSTATE '45000' SET message_text = "Username gia' presente";
+	END;
+    ELSE
+    BEGIN
+		INSERT INTO Utente(username, password, email, telefono, tipologia) VALUES (_username, _password, _email, _telefono, "azienda");
+        SET ultimoId = last_insert_id();
+        INSERT INTO Azienda(denominazione, sede, numeroDipendenti, settore, sitoWeb, idUtente) VALUES (_denominazione, _sede, _dipendenti, _settore, _sitoWeb, ultimoId);
+	END;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `registerPersona` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registerPersona`(_username char(45), _password char(100), _email char(45), _telefono char(45), _cognome char(45), _nome char(45), _dataDiNascita date, _genere char(45), _residenza char(45))
+BEGIN
+	DECLARE user_presente char(45);
+    DECLARE ultimoId integer;
+    SET user_presente=(select username from Utente where username=_username);
+    IF(user_presente) THEN
+	BEGIN
+		SIGNAL SQLSTATE '45000' SET message_text = "Username gia' presente";
+	END;
+    ELSE
+    BEGIN
+		INSERT INTO Utente(username, password, email, telefono, tipologia) VALUES (_username, _password, _email, _telefono, "persona");
+        SET ultimoId = last_insert_id();
+        INSERT INTO Persona(cognome, nome, dataDiNascita, genere, residenza, idUtente) VALUES (_cognome, _nome, _dataDiNascita, _genere, _residenza, ultimoId);
+	END;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -341,4 +518,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-14  8:48:30
+-- Dump completed on 2020-06-26 19:27:02

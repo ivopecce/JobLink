@@ -19,7 +19,7 @@
       <TextField fx:id="usernameField" layoutX="135.0" layoutY="211.0" promptText="Username" />
       <PasswordField fx:id="passwordField" layoutX="135.0" layoutY="258.0" promptText="Password" />
       <Button fx:id="registraButton" layoutX="405.0" layoutY="536.0" mnemonicParsing="false" onAction="#registraAction" text="Registra" />
-      <Label fx:id="loginErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="354.0" layoutY="383.0" prefHeight="39.0" prefWidth="317.0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="registraErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="354.0" layoutY="383.0" prefHeight="39.0" prefWidth="317.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
@@ -31,11 +31,11 @@
       </Label>
       <Button fx:id="annullaButton" layoutX="552.0" layoutY="536.0" mnemonicParsing="false" onAction="#annullaAction" text="Annulla" />
       <PasswordField fx:id="ripetiPasswordField" layoutX="135.0" layoutY="295.0" promptText="Password" />
-      <PasswordField fx:id="nomeField" layoutX="438.0" layoutY="214.0" />
-      <PasswordField fx:id="cognomeField" layoutX="438.0" layoutY="253.0" />
-      <PasswordField fx:id="telefonoField" layoutX="733.0" layoutY="287.0" />
-      <PasswordField fx:id="emailField" layoutX="733.0" layoutY="250.0" />
-      <PasswordField fx:id="residenzaField" layoutX="733.0" layoutY="211.0" />
+      <TextField fx:id="nomeField" layoutX="438.0" layoutY="214.0" />
+      <TextField fx:id="cognomeField" layoutX="438.0" layoutY="253.0" />
+      <TextField fx:id="telefonoField" layoutX="733.0" layoutY="287.0" />
+      <TextField fx:id="emailField" layoutX="733.0" layoutY="250.0" />
+      <TextField fx:id="residenzaField" layoutX="733.0" layoutY="211.0" />
       <Label layoutX="52.0" layoutY="216.0" text="Username:" />
       <Label layoutX="662.0" layoutY="292.0" text="Telefono:" />
       <Label layoutX="682.0" layoutY="255.0" text="email:" />
