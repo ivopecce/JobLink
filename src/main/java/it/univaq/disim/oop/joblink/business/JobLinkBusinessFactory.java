@@ -14,4 +14,6 @@ public abstract class JobLinkBusinessFactory {
 	public abstract UtenteService getUtenteService();
 	
 	public abstract OffertaService getOffertaService();
+	
+	public abstract ProfiloPersonaService getProfiloPersonaService();
 }

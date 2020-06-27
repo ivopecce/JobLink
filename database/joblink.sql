@@ -91,14 +91,14 @@ CREATE TABLE `Formazione` (
   `titolo` varchar(100) NOT NULL,
   `descrizione` text,
   `istituto` varchar(100) NOT NULL,
-  `dataInizio` datetime DEFAULT NULL,
-  `dataFine` datetime DEFAULT NULL,
+  `dataInizio` date DEFAULT NULL,
+  `dataFine` date DEFAULT NULL,
   `voto` int DEFAULT NULL,
   `idPersona` int NOT NULL,
   PRIMARY KEY (`idFormazione`,`titolo`,`istituto`),
   KEY `idPerso_idx` (`idPersona`),
   CONSTRAINT `idPerso` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,6 +107,7 @@ CREATE TABLE `Formazione` (
 
 LOCK TABLES `Formazione` WRITE;
 /*!40000 ALTER TABLE `Formazione` DISABLE KEYS */;
+INSERT INTO `Formazione` VALUES (2,'Diploma superiore','Diploma in Informatica','IIS Avezzano','2012-09-10','2017-07-01',100,1),(3,'Certificazione CCNA','Certificazione CCNA R&S','Elis','2020-06-01','2020-06-01',75,1);
 /*!40000 ALTER TABLE `Formazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,7 +364,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `find_esperienza`(_idUtente integer)
 BEGIN
 	SELECT idEsperienza, titolo, azienda, dataInizio, dataFine, descrizione, localita
     FROM Esperienza
-    WHERE idUtente = _idUtente;
+    WHERE idPersona = _idUtente;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -403,9 +404,9 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `find_skill`(_idUtente integer)
 BEGIN
-	SELECT skill.idSkill, skill.skill, possiede.livelloPosseduto
+	SELECT Skill.idSkill, Skill.skill, Possiede.livelloPosseduto
     FROM Skill INNER JOIN Possiede ON Skill.idSkill = Possiede.idSkill
-    WHERE possiede.idUtente = idUtente;
+    WHERE Possiede.idPersona = _idUtente;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -518,4 +519,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-26 19:27:02
+-- Dump completed on 2020-06-27 12:46:23

@@ -78,34 +78,64 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	private ViewDispatcher dispatcher;
 	private Persona persona;
-	private UtenteService utenteService;
 	private ProfiloPersonaService profiloPersonaService;
 	
 	
 	public ProfiloUtenteController() {
 		dispatcher = ViewDispatcher.getInstance();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
-		utenteService = factory.getUtenteService();
+		profiloPersonaService = factory.getProfiloPersonaService();
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		aggiungiSkillAction(ActionEvent);
-		aggiungiFormazioneAction(ActionEvent);
-		aggiungiEsperienzaAction(ActionEvent);
+//		aggiungiSkillAction(ActionEvent);
+//		aggiungiFormazioneAction(ActionEvent);
+//		aggiungiEsperienzaAction(ActionEvent);
 
 	}
 	
 	@Override
 	public void initializeData(Persona persona) {
-//		this.persona = persona;
-//		try {
-//			List<Formazione> formazione = profiloPersonaService.findAllFormazione(persona);
-//			List<Esperienza> esperienza = profiloPersonaService.findAllEsperienza(persona);
-//			List<Possiede> possiede = profiloPersonaService.findAllSkill(persona);
-//		} catch (BusinessException e) {
+		this.persona = persona;
+		try {
+			List<Formazione> formazione = profiloPersonaService.findAllFormazione(persona);
+			loadFormazione(formazione);
+			List<Esperienza> esperienza = profiloPersonaService.findAllEsperienza(persona);
+			loadEsperienza(esperienza);
+			List<Possiede> possiede = profiloPersonaService.findAllSkill(persona);
+			loadSkill(possiede);
+		} catch (BusinessException e) {
 //			dispatcher.renderError(e);
-//		}
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadSkill(List<Possiede> possiede) {
+		if(possiede.isEmpty()) aggiungiSkillAction(ActionEvent);
+		
+		for(Possiede p : possiede) {
+			int index = gridSkill.getRowCount();
+			for (Node n : gridSkill.getChildren()) {
+		        Integer row = GridPane.getRowIndex(n);
+		        if (row != null && row.intValue() >= index) {
+		        	row+=1;
+		            GridPane.setRowIndex(n, row);
+		        }
+		    }
+			Label l = new Label("Skill:");
+			TextField skillField = new TextField(p.getSkill().getSkill());
+			Label l1 = new Label("Livello:");
+			ComboBox livelloComboBox = new ComboBox<LivelloSkill>();
+			livelloComboBox.getItems().addAll(LivelloSkill.values());
+			livelloComboBox.setValue(p.getLivelloPosseduto());
+			Button aggiungiSkillButton = new Button("+");
+			aggiungiSkillButton.setOnAction(evt -> {
+				aggiungiSkillAction(evt);
+			});
+			
+			gridSkill.addRow(index, l, skillField, l1, livelloComboBox, aggiungiSkillButton);
+		}
 	}
 	
 	public void aggiungiSkillAction(ActionEvent event) {
@@ -131,6 +161,41 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	public void rimuoviSkillAction(ActionEvent event) {
 		
+	}
+	
+	public void loadFormazione(List<Formazione> formazione) {
+		if(formazione.isEmpty()) {
+			aggiungiFormazioneAction(ActionEvent);
+			
+		}
+		for(Formazione f : formazione) {
+			TitledPane formazioneTPane = new TitledPane();
+			formazioneTPane.setText(f.getTitolo());
+			GridPane formazioneGridPane = new GridPane();
+			GridPane.setRowIndex(formazioneGridPane, 7);
+			GridPane.setColumnIndex(formazioneGridPane, 2);
+			Label titoloLabel = new Label("Titolo:");
+			Label descrizioneLabel = new Label("Descrizione:");
+			Label dataInizioLabel = new Label("Data inizo:");
+			Label dataFineLabel = new Label("Data fine:");
+			Label istitutoLabel = new Label("Istituto:");
+			Label votoLabel = new Label("Voto:");
+			TextField titoloFormazioneField = new TextField(f.getTitolo());
+			TextArea descrizioneFormazioneField = new TextArea(f.getDescrizione());
+			DatePicker dataInizioFormazioneField = new DatePicker(f.getDataInizio());
+			DatePicker dataFineFormazioneField = new DatePicker(f.getDataFine());
+			TextField istitutoField = new TextField(f.getIstituto());
+			TextField votoField = new TextField(f.getVoto().toString());
+			Button aggiungiFormazioneButton = new Button("Aggiungi formazione");
+			aggiungiFormazioneButton.setOnAction(evt -> {
+				aggiungiFormazioneAction(evt);
+			});
+			formazioneGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, istitutoLabel, votoLabel);
+			formazioneGridPane.addColumn(1, titoloFormazioneField, descrizioneFormazioneField, dataInizioFormazioneField, dataFineFormazioneField, istitutoField, votoField, aggiungiFormazioneButton);
+			formazioneTPane.setContent(formazioneGridPane);
+			this.formazioneVBox.getChildren().add(formazioneTPane);
+			this.formazioneScrollPane.setContent(formazioneVBox);
+		}
 	}
 	
 	public void aggiungiFormazioneAction(ActionEvent event) {
@@ -167,6 +232,39 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	public void eliminaFormazioneAction(ActionEvent event) {
 		
+	}
+	
+	public void loadEsperienza(List<Esperienza> esperienza) {
+		if(esperienza.isEmpty()) aggiungiEsperienzaAction(ActionEvent);
+		
+		for(Esperienza esp : esperienza) {
+			TitledPane esperienzaTPane = new TitledPane();
+			esperienzaTPane.setText("Esperienza");
+			GridPane esperienzaGridPane = new GridPane();
+			GridPane.setRowIndex(esperienzaGridPane, 7);
+			GridPane.setColumnIndex(esperienzaGridPane, 2);
+			Label titoloLabel = new Label("Titolo:");
+			Label descrizioneLabel = new Label("Descrizione:");
+			Label dataInizioLabel = new Label("Data inizo:");
+			Label dataFineLabel = new Label("Data fine:");
+			Label aziendaLabel = new Label("Azienda:");
+			Label localitaLabel = new Label("Localita`:");
+			TextField titoloEsperienzaField = new TextField(esp.getTitolo());
+			TextArea descrizioneEsperienzaField = new TextArea(esp.getDescrizione());
+			DatePicker dataInizioEsperienzaField = new DatePicker(esp.getDataInizio());
+			DatePicker dataFineEsperienzaField = new DatePicker(esp.getDataFine());
+			TextField aziendaField = new TextField(esp.getAzienda());
+			TextField localitaField = new TextField(esp.getLocalita());
+			Button aggiungiEsperienzaButton = new Button("Aggiungi esperienza");
+			aggiungiEsperienzaButton.setOnAction(evt -> {
+				aggiungiEsperienzaAction(evt);
+			});
+			esperienzaGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, aziendaLabel, localitaLabel);
+			esperienzaGridPane.addColumn(1, titoloEsperienzaField, descrizioneEsperienzaField, dataInizioEsperienzaField, dataFineEsperienzaField, aziendaField, localitaField, aggiungiEsperienzaButton);
+			esperienzaTPane.setContent(esperienzaGridPane);
+			this.esperienzaVBox.getChildren().add(esperienzaTPane);
+			this.esperienzaScrollPane.setContent(esperienzaVBox);
+		}
 	}
 	
 	public void aggiungiEsperienzaAction(ActionEvent event) {
@@ -211,7 +309,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	}
 	
 	public void annullaAction(ActionEvent event) {
-		
+		dispatcher.loggedIn(persona);
 	}
 
 }
