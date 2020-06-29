@@ -12,8 +12,10 @@ import java.util.List;
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.domain.Azienda;
+import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.Persona;
+import it.univaq.disim.oop.joblink.domain.Risposta;
 import it.univaq.disim.oop.joblink.domain.StatoOfferta;
 
 public class DBOffertaServiceImpl implements OffertaService {
@@ -195,5 +197,84 @@ public class DBOffertaServiceImpl implements OffertaService {
 			throw new BusinessException(e);
 		}
 	}
+
+	@Override
+	public List<Risposta> getCandidati(Offerta offerta) throws BusinessException {
+		List<Risposta> result = new ArrayList<>();
+		try {
+			String sql = "CALL get_candidati(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, offerta.getId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Risposta risposta = new Risposta();
+				risposta.setOfferta(offerta);
+				risposta.setPersona(new Persona());
+				risposta.getPersona().setId(rs.getInt(1));
+				risposta.getPersona().setCognome(rs.getString(2));
+				risposta.getPersona().setNome(rs.getString(3));
+				risposta.getPersona().setDataDiNascita(LocalDate.parse(rs.getString(4)));
+				switch(rs.getString(5)) {
+				case "MASCHIO":
+					risposta.getPersona().setGenere(Genere.MASCHIO);
+					break;
+				case "FEMMINA":
+					risposta.getPersona().setGenere(Genere.FEMMINA);
+					break;
+				case "ALTRO":
+					risposta.getPersona().setGenere(Genere.ALTRO);
+					break;
+				}
+				risposta.getPersona().setResidenza(rs.getString(6));
+				risposta.getPersona().setEmail(rs.getString(7));
+				risposta.getPersona().setTelefono(rs.getString(8));
+				result.add(risposta);				
+			}
+			return result;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<Persona> getAttinenti(Offerta offerta) throws BusinessException {
+		List<Persona> result = new ArrayList<>();
+		try {
+			String sql = "CALL persone_attinenti(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, offerta.getId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Persona persona = new Persona();
+				persona.setId(rs.getInt(1));
+				persona.setCognome(rs.getString(2));
+				persona.setNome(rs.getString(3));
+				persona.setDataDiNascita(LocalDate.parse(rs.getString(4)));
+				switch(rs.getString(5)) {
+				case "MASCHIO":
+					persona.setGenere(Genere.MASCHIO);
+					break;
+				case "FEMMINA":
+					persona.setGenere(Genere.FEMMINA);
+					break;
+				case "ALTRO":
+					persona.setGenere(Genere.ALTRO);
+					break;
+				}
+				persona.setResidenza(rs.getString(6));
+				persona.setEmail(rs.getString(7));
+				persona.setTelefono(rs.getString(8));
+				result.add(persona);
+			}
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+	}
+
+	
+	
 
 }

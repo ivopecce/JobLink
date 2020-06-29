@@ -5,6 +5,7 @@ import java.util.List;
 import it.univaq.disim.oop.joblink.domain.Azienda;
 import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.Persona;
+import it.univaq.disim.oop.joblink.domain.Risposta;
 
 public interface OffertaService {
 	List<Offerta> findAllOfferte(Azienda azienda) throws BusinessException;
@@ -21,5 +22,6 @@ public interface OffertaService {
 	
 	Boolean getCandidatura(Offerta offerta, Persona persona) throws BusinessException;
 	void SetCandidatura(Offerta offerta, Persona persona, Boolean candidatura) throws BusinessException;
-
+	List<Risposta> getCandidati(Offerta offerta) throws BusinessException;
+	List<Persona> getAttinenti(Offerta offerta) throws BusinessException;
 }

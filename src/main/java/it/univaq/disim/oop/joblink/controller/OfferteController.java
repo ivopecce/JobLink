@@ -36,8 +36,6 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	@FXML
 	private TableColumn<Offerta, String> titoloTableColumn;
 	@FXML
-	private TableColumn<Offerta, Integer> candidatiTableColumn;
-	@FXML
 	private TableColumn<Offerta, String> statoTableColumn;
 	@FXML
 	private TableColumn<Offerta, Button> azioniTableColumn;

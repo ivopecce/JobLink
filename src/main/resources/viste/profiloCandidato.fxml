@@ -2,16 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.disim.oop.joblink.controller.ProfiloUtenteController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.disim.oop.joblink.controller.ProfiloCandidatoController">
    <children>
       <Label prefHeight="29.0" prefWidth="481.0" text="Profilo Utente">
          <font>
@@ -75,17 +72,12 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="46.0" prefHeight="20.0" prefWidth="98.0" text="username:" GridPane.columnIndex="2">
-                           <GridPane.margin>
-                              <Insets left="30.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="46.0" prefHeight="20.0" prefWidth="98.0" text="email:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Label layoutX="10.0" layoutY="46.0" prefHeight="20.0" prefWidth="98.0" text="email:" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="58.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="46.0" prefHeight="20.0" prefWidth="98.0" text="telefono:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="46.0" prefHeight="20.0" prefWidth="98.0" text="telefono:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="42.0" />
                            </GridPane.margin>
@@ -105,31 +97,26 @@
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="usernameField" GridPane.columnIndex="3">
+                        <TextField fx:id="emailField" GridPane.columnIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="emailField" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <TextField fx:id="telefonoField" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="telefonoField" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                        <TextField fx:id="dataDiNascitaField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <DatePicker fx:id="dataNascitaField" prefHeight="26.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="genereField" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
-                        </DatePicker>
-                        <ComboBox fx:id="genereComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </GridPane.margin>
-                        </ComboBox>
+                        </TextField>
                      </children>
                   </GridPane>
                </content>
@@ -138,24 +125,7 @@
                <content>
                   <ScrollPane fx:id="formazioneScrollPane" prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <VBox fx:id="formazioneVBox" prefHeight="414.0" prefWidth="656.0">
-                           <children>
-                              <TableView fx:id="formazioneTable" prefHeight="365.0" prefWidth="620.0">
-                                <columns>
-                                  <TableColumn fx:id="titoloFormazioneColumn" prefWidth="176.0" text="Titolo" />
-                                  <TableColumn fx:id="dataInizioFColumn" prefWidth="95.0" text="Data inizio" />
-                                    <TableColumn fx:id="dataFineFColumn" prefWidth="91.0" text="Data fine" />
-                                    <TableColumn fx:id="istitutoColumn" prefWidth="133.0" text="Istituto" />
-                                    <TableColumn fx:id="votoColumn" prefWidth="49.0" text="Voto" />
-                                    <TableColumn fx:id="azioniFColumn" prefWidth="94.0" text="Azioni" />
-                                </columns>
-                              </TableView>
-                              <Button fx:id="aggungiFormazioneButton" mnemonicParsing="false" onAction="#aggiungiFormazioneAction" text="Aggiungi formazione">
-                                 <VBox.margin>
-                                    <Insets left="480.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children></VBox>
+                        <VBox fx:id="formazioneVBox" prefHeight="413.0" prefWidth="656.0" />
                      </content>
                   </ScrollPane>
                </content>
@@ -164,58 +134,42 @@
                <content>
                   <ScrollPane fx:id="esperienzaScrollPane" prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <VBox fx:id="esperienzaVBox" prefHeight="413.0" prefWidth="656.0">
-                           <children>
-                              <TableView fx:id="esperienzaTable" prefHeight="383.0" prefWidth="656.0">
-                                 <columns>
-                                    <TableColumn fx:id="titoloEsperienzaColumn" prefWidth="232.0" text="Titolo" />
-                                    <TableColumn fx:id="dataInizioEColumn" prefWidth="107.0" text="Data inizio" />
-                                    <TableColumn fx:id="dataFineEColumn" prefWidth="91.0" text="Data fine" />
-                                    <TableColumn fx:id="aziendaColumn" prefWidth="125.0" text="Azienda" />
-                                    <TableColumn fx:id="azioniEColumn" prefWidth="100.0" text="Azioni" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="aggiungiEsperienzaButton" mnemonicParsing="false" onAction="#aggiungiEsperienzaAction" text="Aggiungi esperienza">
-                                 <VBox.margin>
-                                    <Insets left="495.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children></VBox>
-                     </content></ScrollPane>
-               </content>
-            </Tab>
-            <Tab fx:id="skillTab" text="Skill">
-               <content>
-                  <ScrollPane fx:id="skillScrollPane" prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                        <VBox fx:id="skillVBox" prefHeight="413.0" prefWidth="656.0">
-                           <children>
-                              <TableView fx:id="skillTable" prefHeight="383.0" prefWidth="656.0">
-                                 <columns>
-                                    <TableColumn fx:id="skillColumn" prefWidth="232.0" text="Skill" />
-                                    <TableColumn fx:id="livelloColumn" prefWidth="134.0" text="Livello" />
-                                    <TableColumn fx:id="azioniSColumn" prefWidth="112.0" text="Azioni" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="aggiungiSkillButton" mnemonicParsing="false" onAction="#aggiungiSkillAction" text="Aggiungi skill">
-                                 <VBox.margin>
-                                    <Insets left="540.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="esperienzaVBox" prefHeight="413.0" prefWidth="655.0" />
                      </content>
                   </ScrollPane>
                </content>
+            </Tab>
+            <Tab fx:id="skillTab" text="Skill">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="415.0" prefWidth="656.0">
+                           <content>
+                              <GridPane fx:id="gridSkill" prefHeight="54.0" prefWidth="470.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.0" minWidth="10.0" prefWidth="39.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="149.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="62.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="125.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
         </tabs>
       </TabPane>
       <Separator layoutX="10.0" layoutY="39.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="52.0" prefWidth="600.0" spacing="30.0">
          <children>
-            <Button fx:id="eliminaUtenteButton" mnemonicParsing="false" onAction="#eliminaUtenteAction" prefHeight="26.0" prefWidth="119.0" text="Elimina utente" />
-            <Button fx:id="salvaButton" mnemonicParsing="false" onAction="#salvaAction" prefHeight="25.0" prefWidth="73.0" text="Salva" />
-            <Button fx:id="annullaButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#annullaAction" prefHeight="25.0" prefWidth="73.0" text="Annulla" />
+            <Button fx:id="contattaButton" mnemonicParsing="false" onAction="#contattaAction" prefHeight="26.0" prefWidth="77.0" text="Contatta" />
+            <Button fx:id="indietroButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#indietroAction" prefHeight="25.0" prefWidth="73.0" text="Indietro" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" />

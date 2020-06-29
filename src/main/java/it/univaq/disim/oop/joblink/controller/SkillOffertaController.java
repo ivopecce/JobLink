@@ -68,8 +68,8 @@ public class SkillOffertaController implements Initializable, DataInitializable<
 
 			@Override
 			public ObservableValue<Button> call(CellDataFeatures<Richiesta, Button> param) {
-				final Button offerteButton = new Button("Gestisci");
-				offerteButton.setOnAction(new EventHandler<ActionEvent>() {
+				final Button skillButton = new Button("Gestisci");
+				skillButton.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
@@ -78,7 +78,7 @@ public class SkillOffertaController implements Initializable, DataInitializable<
 					}
 				});
 				
-				return new SimpleObjectProperty<Button>(offerteButton);
+				return new SimpleObjectProperty<Button>(skillButton);
 			}
 		});
 

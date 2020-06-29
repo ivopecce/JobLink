@@ -106,5 +106,15 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 		}
 		dispatcher.renderView("offerte", offerta.getAzienda());
 	}
+	
+	@FXML
+	public void visualizzaCandidatiAction(ActionEvent event) {
+		dispatcher.renderView("candidati", offerta);
+	}
+	
+	@FXML
+	public void utentiAttinentiAction(ActionEvent event) {
+		dispatcher.renderView("utentiAttinenti", offerta);
+	}
 
 }

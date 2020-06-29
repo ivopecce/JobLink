@@ -2,7 +2,6 @@ package it.univaq.disim.oop.joblink.controller;
 
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -17,7 +16,6 @@ import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.LivelloSkill;
 import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Possiede;
-import it.univaq.disim.oop.joblink.domain.Skill;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,16 +26,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class ProfiloUtenteController implements Initializable, DataInitializable<Persona> {
+public class ProfiloUtenteController2 implements Initializable, DataInitializable<Persona> {
 
+	private static final ActionEvent ActionEvent = null;
 	@FXML
 	private TextField nomeField;
 	@FXML
@@ -55,39 +52,15 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	@FXML
 	private ComboBox<Genere> genereComboBox;
 	@FXML
-	private TableView<Formazione> formazioneTable;
+	private ScrollPane formazioneScrollPane;
 	@FXML
-	private TableColumn<Formazione, String> titoloFormazioneColumn;
+	private VBox formazioneVBox;
 	@FXML
-	private TableColumn<Formazione, LocalDate> dataInizioFColumn;
+	private ScrollPane esperienzaScrollPane;
 	@FXML
-	private TableColumn<Formazione, LocalDate> dataFineFColumn;
+	private VBox esperienzaVBox;
 	@FXML
-	private TableColumn<Formazione, String> istitutoColumn;
-	@FXML
-	private TableColumn<Formazione, Integer> votoColumn;
-	@FXML
-	private TableColumn<Formazione, Button> azioniFColumn;
-	@FXML
-	private TableView<Esperienza> esperienzaTable;
-	@FXML
-	private TableColumn<Esperienza, String> titoloEsperienzaColumn;
-	@FXML
-	private TableColumn<Esperienza, LocalDate> dataInizioEColumn;
-	@FXML
-	private TableColumn<Esperienza, LocalDate> dataFineEColumn;
-	@FXML
-	private TableColumn<Esperienza, String> aziendaColumn;
-	@FXML
-	private TableColumn<Esperienza, Button> azioniEColumn;
-	@FXML
-	private TableView<Skill> skillTable;
-	@FXML 
-	private TableColumn<Skill, String> skillColumn;
-	@FXML 
-	private TableColumn<Skill, LivelloSkill> livelloColumn;
-	@FXML 
-	private TableColumn<Skill, Button> azioniSColumn;	
+	private GridPane gridSkill;
 	@FXML
 	private Button eliminaUtenteButton;
 	@FXML
@@ -105,7 +78,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	private List<Possiede> possiedeList = new ArrayList<>();
 
 	
-	public ProfiloUtenteController() {
+	public ProfiloUtenteController2() {
 		dispatcher = ViewDispatcher.getInstance();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
 		profiloPersonaService = factory.getProfiloPersonaService();
@@ -115,7 +88,6 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.genereComboBox.getItems().addAll(Genere.values());
-		this.usernameField.setEditable(false);
 
 	}
 	
@@ -135,6 +107,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 			this.genereComboBox.setValue(persona.getGenere());
 			this.residenzaField.setText(persona.getResidenza());
 			this.usernameField.setText(persona.getUsername());
+			this.usernameField.setEditable(false);
 			this.emailField.setText(persona.getEmail());
 			this.telefonoField.setText(persona.getTelefono());
 		} catch (BusinessException e) {
@@ -346,7 +319,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	@FXML
 	public void salvaAction(ActionEvent event) {
-		
+
 		
 	}
 	

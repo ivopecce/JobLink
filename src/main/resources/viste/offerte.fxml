@@ -20,9 +20,8 @@
           <TableColumn fx:id="codiceTableColumn" prefWidth="55.0" text="Codice" />
           <TableColumn fx:id="titoloTableColumn" prefWidth="291.0" text="Posizione" />
             <TableColumn fx:id="dataInserimentoTableColumn" prefWidth="134.0" text="Data inserimento" />
-            <TableColumn fx:id="candidatiTableColumn" prefWidth="82.0" text="Candidati" />
-            <TableColumn fx:id="statoTableColumn" prefWidth="67.0" text="Stato" />
-            <TableColumn fx:id="azioniTableColumn" prefWidth="100.0" text="Azioni" />
+            <TableColumn fx:id="statoTableColumn" prefWidth="133.0" text="Stato" />
+            <TableColumn fx:id="azioniTableColumn" prefWidth="116.0" text="Azioni" />
         </columns>
       </TableView>
       <Button mnemonicParsing="false" onAction="#aggiungiOffertaAction" prefHeight="26.0" prefWidth="148.0" text="Aggiungi Offerta">
