@@ -2,7 +2,6 @@ package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;

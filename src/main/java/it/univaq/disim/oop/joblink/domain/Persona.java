@@ -1,16 +1,13 @@
 package it.univaq.disim.oop.joblink.domain;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 
 
 public class Persona extends Utente {
 	private String cognome;
 	private String nome;
 	private LocalDate dataDiNascita;
-	private String genere;
+	private Genere genere;
 	private String residenza;
 	
 	public String getCognome() {
@@ -31,10 +28,10 @@ public class Persona extends Utente {
 	public void setDataDiNascita(LocalDate data) {
 		this.dataDiNascita = data;
 	}
-	public String getGenere() {
+	public Genere getGenere() {
 		return genere;
 	}
-	public void setGenere(String genere) {
+	public void setGenere(Genere genere) {
 		this.genere = genere;
 	}
 	public String getResidenza() {

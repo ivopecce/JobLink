@@ -62,7 +62,7 @@
             </TextArea>
             <TextField fx:id="titoloField" GridPane.columnIndex="1" />
             <Label prefHeight="16.0" prefWidth="134.0" text="Data inserimento:" GridPane.rowIndex="4" />
-            <Label fx:id="dataInserimento" prefHeight="16.0" prefWidth="189.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="dataInserimentoLabel" prefHeight="16.0" prefWidth="189.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>

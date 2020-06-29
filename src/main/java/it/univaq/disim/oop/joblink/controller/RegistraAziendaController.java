@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
-import it.univaq.disim.oop.joblink.business.UtenteNotFoundException;
 import it.univaq.disim.oop.joblink.business.UtenteService;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.event.ActionEvent;

@@ -4,17 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.domain.Azienda;
 import it.univaq.disim.oop.joblink.domain.Offerta;
+import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.StatoOfferta;
 
 public class DBOffertaServiceImpl implements OffertaService {
@@ -36,13 +35,7 @@ public class DBOffertaServiceImpl implements OffertaService {
 			while(rs.next()) {
 				Offerta offerta = new Offerta();
 				offerta.setId(rs.getInt(1));
-				Date date;
-				try {
-					date = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(2));
-					offerta.setDataCreazione(date);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+				offerta.setDataCreazione(LocalDate.parse(rs.getDate(2).toString()));
 				offerta.setTitoloOfferta(rs.getString(3));
 				offerta.setTestoOfferta(rs.getString(4));
 				offerta.setLocalita(rs.getString(5));
@@ -68,13 +61,7 @@ public class DBOffertaServiceImpl implements OffertaService {
 			ResultSet rs = ps.executeQuery();
 			
 			result.setId(rs.getInt(1));
-			Date date;
-			try {
-				date = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(2));
-				result.setDataCreazione(date);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			result.setDataCreazione(LocalDate.parse(rs.getDate(2).toString()));
 			result.setTitoloOfferta(rs.getString(3));
 			result.setTestoOfferta(rs.getString(4));
 			result.setLocalita(rs.getString(5));
@@ -87,6 +74,36 @@ public class DBOffertaServiceImpl implements OffertaService {
 			throw new BusinessException(e);
 		}
 				
+	}
+	
+	@Override
+	public List<Offerta> findOfferteAttinenti(Persona persona) throws BusinessException {
+		List<Offerta> result = new ArrayList<>();
+		try {
+			String sql = "CALL offerte_attinenti(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, persona.getId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Offerta offerta = new Offerta();
+				offerta.setId(rs.getInt(1));
+				offerta.setDataCreazione(LocalDate.parse(rs.getString(2)));
+				offerta.setTitoloOfferta(rs.getString(3));
+				offerta.setTestoOfferta(rs.getString(4));
+				offerta.setLocalita(rs.getString(5));
+				offerta.setStato(StatoOfferta.ATTIVA);
+				Azienda azienda = new Azienda();
+				azienda.setId(rs.getInt(6));
+				azienda.setDenominazione(rs.getString(7));
+				offerta.setAzienda(azienda);
+				result.add(offerta);
+			}
+			
+			return result;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
 	}
 
 	@Override
@@ -142,6 +159,41 @@ public class DBOffertaServiceImpl implements OffertaService {
 			throw new BusinessException(e);
 		}
 		
+	}
+	
+	@Override
+	public void SetCandidatura(Offerta offerta, Persona persona, Boolean candidatura) throws BusinessException {
+		try {
+			String sql = "CALL set_candidatura(?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, offerta.getId());
+			ps.setInt(2, persona.getId());
+			ps.setBoolean(3, candidatura);
+			ps.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+	}
+	
+	@Override
+	public Boolean getCandidatura(Offerta offerta, Persona persona) throws BusinessException {
+		Boolean candidato = false;
+		try {
+			String sql = "CALL get_candidatura(?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(2, offerta.getId());
+			ps.setInt(1, persona.getId());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				if(!rs.getString(1).isEmpty()) candidato = true;
+				else candidato = false;
+			}
+			return candidato;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
 	}
 
 }

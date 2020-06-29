@@ -1,19 +1,12 @@
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
-import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.OffertaService;
-import it.univaq.disim.oop.joblink.business.impl.file.FileOffertaServiceImpl;
-import it.univaq.disim.oop.joblink.business.impl.ram.RAMOffertaServiceImpl;
-import it.univaq.disim.oop.joblink.domain.Azienda;
 import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.StatoOfferta;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
@@ -22,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -50,8 +42,6 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 	
 	public OffertaController() {
 		dispatcher = ViewDispatcher.getInstance();
-//		offertaService = new RAMOffertaServiceImpl();
-//		offertaService = new FileOffertaServiceImpl();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
 		offertaService = factory.getOffertaService();
 	}
@@ -73,13 +63,18 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 	}
 	
 	@FXML
+	public void skillRichiesteAction(ActionEvent event) {
+		dispatcher.renderView("skillOfferta", offerta);
+		
+	}
+	
+	@FXML
 	public void salvaAction(ActionEvent event) {
 		try {
 			offerta.setTitoloOfferta(titolo.getText());
 			offerta.setTestoOfferta(testo.getText());
 			offerta.setLocalita(localita.getText());
-			Date oggi = new Date(System.currentTimeMillis());
-			offerta.setDataCreazione(oggi);
+			offerta.setDataCreazione(LocalDate.now());
 			offerta.setStato(statoOfferta.getValue());
 			
 			if(offerta.getId() == null) {

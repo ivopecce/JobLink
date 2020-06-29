@@ -1,7 +1,6 @@
 package it.univaq.disim.oop.joblink.domain;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class Esperienza {
 	private Integer id;

@@ -1,18 +1,16 @@
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.UtenteNotFoundException;
 import it.univaq.disim.oop.joblink.business.UtenteService;
 import it.univaq.disim.oop.joblink.domain.Azienda;
+import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Utente;
 
@@ -68,9 +66,10 @@ public class DBUtenteServiceImpl implements UtenteService {
 						((Persona) utente).setNome(rs.getString(8));
 						LocalDate date;
 						date = LocalDate.parse(rs.getString(9));
-//							date = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(9));
 						((Persona) utente).setDataDiNascita(date);
-						((Persona) utente).setGenere(rs.getString(10));
+						if (rs.getString(10).equals(Genere.MASCHIO.toString()))((Persona) utente).setGenere(Genere.MASCHIO);
+						if (rs.getString(10).equals(Genere.FEMMINA.toString()))((Persona) utente).setGenere(Genere.FEMMINA);
+						if (rs.getString(10).equals(Genere.ALTRO.toString()))((Persona) utente).setGenere(Genere.ALTRO);
 						((Persona) utente).setResidenza(rs.getString(11));
 					}
 				}
@@ -111,7 +110,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 
 	@Override
 	public void registerPersona(String username, String password, String email, String telefono, String cognome,
-			String nome, LocalDate dataDiNascita, String genere, String residenza) throws BusinessException {
+		String nome, LocalDate dataDiNascita, String genere, String residenza) throws BusinessException {
 		String sql = "CALL registerPersona(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
@@ -122,13 +121,39 @@ public class DBUtenteServiceImpl implements UtenteService {
 			ps.setString(4, telefono);
 			ps.setString(5, cognome);
 			ps.setString(6, nome);
-//			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//			ps.setString(7, format.format(dataDiNascita));
 			ps.setString(7, dataDiNascita.toString());
 			ps.setString(8, genere);
 			ps.setString(9, residenza);
 			ps.execute();
 		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
+		
+	}
+
+	@Override
+	public void deletePersona(Persona persona) throws BusinessException{
+		try {
+			String sql = "CALL delete_persona(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, persona.getId());
+			ps.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
+		
+	}
+
+	@Override
+	public void deleteAzienda(Azienda azienda) throws BusinessException{
+		try {
+			String sql = "CALL delete_azienda(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, azienda.getId());
+			ps.execute();
+		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new BusinessException();
 		}

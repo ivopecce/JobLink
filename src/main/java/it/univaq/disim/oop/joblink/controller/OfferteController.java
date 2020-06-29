@@ -1,22 +1,15 @@
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.OffertaService;
-import it.univaq.disim.oop.joblink.business.impl.file.FileOffertaServiceImpl;
-import it.univaq.disim.oop.joblink.business.impl.ram.RAMOffertaServiceImpl;
-import it.univaq.disim.oop.joblink.business.impl.ram.RAMUtenteServiceImpl;
 import it.univaq.disim.oop.joblink.domain.Azienda;
 import it.univaq.disim.oop.joblink.domain.Offerta;
-import it.univaq.disim.oop.joblink.domain.StatoOfferta;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -49,7 +42,7 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	@FXML
 	private TableColumn<Offerta, Button> azioniTableColumn;
 	@FXML
-	private TableColumn<Offerta, SimpleDateFormat> dataInserimentoTableColumn;
+	private TableColumn<Offerta, LocalDate> dataInserimentoTableColumn;
 	
 	private Azienda azienda;
 	
@@ -58,8 +51,6 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 	
 	public OfferteController() {
 		dispatcher = ViewDispatcher.getInstance();
-//		offertaService = new RAMOffertaServiceImpl();
-//		offertaService = new FileOffertaServiceImpl();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
 		offertaService = factory.getOffertaService();
 	}
@@ -119,8 +110,7 @@ public class OfferteController implements Initializable, DataInitializable<Azien
 		offerta.setTestoOfferta("[Inserisci il testo dell'offerta]");
 		offerta.setAzienda(azienda);
 		offerta.setLocalita("[Inserisci localita`]");
-		Date oggi = Calendar.getInstance().getTime();
-		offerta.setDataCreazione(oggi);
+		offerta.setDataCreazione(LocalDate.now());
 		dispatcher.renderView("offerta", offerta);
 	}
 }

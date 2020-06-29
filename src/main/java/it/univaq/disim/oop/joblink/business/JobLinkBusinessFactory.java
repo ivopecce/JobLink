@@ -1,10 +1,8 @@
 package it.univaq.disim.oop.joblink.business;
 
 import it.univaq.disim.oop.joblink.business.impl.db.DBJobLinkBusinessFactoryImpl;
-import it.univaq.disim.oop.joblink.business.impl.file.FileJobLinkBusinessFactoryImpl;
 
 public abstract class JobLinkBusinessFactory {
-//	private static JobLinkBusinessFactory factory = new FileJobLinkBusinessFactoryImpl();
 	private static JobLinkBusinessFactory factory = new DBJobLinkBusinessFactoryImpl();
 	
 	public static JobLinkBusinessFactory getInstance() {
@@ -16,4 +14,6 @@ public abstract class JobLinkBusinessFactory {
 	public abstract OffertaService getOffertaService();
 	
 	public abstract ProfiloPersonaService getProfiloPersonaService();
+	
+	public abstract SkillService getSkillService();
 }

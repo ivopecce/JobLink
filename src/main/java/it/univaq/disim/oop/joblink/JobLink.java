@@ -13,13 +13,7 @@ public class JobLink extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/viste/login.fxml"));
-//		Parent login = loader.load();
-//		Scene scene = new Scene(login);
-//        stage.setScene(scene);
-//        stage.show();
-		
+			
 		try {
 			ViewDispatcher viewDispatcher = ViewDispatcher.getInstance();
 			viewDispatcher.loginView(stage);

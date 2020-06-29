@@ -2,25 +2,21 @@ package it.univaq.disim.oop.joblink.controller;
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.border.TitledBorder;
 
 import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.ProfiloPersonaService;
 import it.univaq.disim.oop.joblink.business.UtenteService;
-import it.univaq.disim.oop.joblink.domain.Azienda;
 import it.univaq.disim.oop.joblink.domain.Esperienza;
 import it.univaq.disim.oop.joblink.domain.Formazione;
+import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.LivelloSkill;
-import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Possiede;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,11 +26,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -50,15 +44,13 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	@FXML
 	private TextField usernameField;
 	@FXML
-	private TextField passwordField;
-	@FXML
 	private TextField emailField;
 	@FXML
 	private TextField telefonoField;
 	@FXML
 	private DatePicker dataNascitaField;
 	@FXML
-	private ComboBox<String> genereComboBox;
+	private ComboBox<Genere> genereComboBox;
 	@FXML
 	private ScrollPane formazioneScrollPane;
 	@FXML
@@ -79,19 +71,23 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	private ViewDispatcher dispatcher;
 	private Persona persona;
 	private ProfiloPersonaService profiloPersonaService;
+	private UtenteService utenteService;
 	
+	private List<Esperienza> esperienzaList = new ArrayList<>();
+	private List<Formazione> formazioneList = new ArrayList<>();
+	private List<Possiede> possiedeList = new ArrayList<>();
+
 	
 	public ProfiloUtenteController() {
 		dispatcher = ViewDispatcher.getInstance();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
 		profiloPersonaService = factory.getProfiloPersonaService();
+		utenteService = factory.getUtenteService();
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		aggiungiSkillAction(ActionEvent);
-//		aggiungiFormazioneAction(ActionEvent);
-//		aggiungiEsperienzaAction(ActionEvent);
+		this.genereComboBox.getItems().addAll(Genere.values());
 
 	}
 	
@@ -99,14 +95,22 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	public void initializeData(Persona persona) {
 		this.persona = persona;
 		try {
-			List<Formazione> formazione = profiloPersonaService.findAllFormazione(persona);
-			loadFormazione(formazione);
-			List<Esperienza> esperienza = profiloPersonaService.findAllEsperienza(persona);
-			loadEsperienza(esperienza);
-			List<Possiede> possiede = profiloPersonaService.findAllSkill(persona);
-			loadSkill(possiede);
+			formazioneList = profiloPersonaService.findAllFormazione(persona);
+			loadFormazione(formazioneList);
+			esperienzaList = profiloPersonaService.findAllEsperienza(persona);
+			loadEsperienza(esperienzaList);
+			possiedeList = profiloPersonaService.findAllSkill(persona);
+			loadSkill(possiedeList);
+			this.nomeField.setText(persona.getNome());
+			this.cognomeField.setText(persona.getCognome());
+			this.dataNascitaField.setValue(persona.getDataDiNascita());
+			this.genereComboBox.setValue(persona.getGenere());
+			this.residenzaField.setText(persona.getResidenza());
+			this.usernameField.setText(persona.getUsername());
+			this.usernameField.setEditable(false);
+			this.emailField.setText(persona.getEmail());
+			this.telefonoField.setText(persona.getTelefono());
 		} catch (BusinessException e) {
-//			dispatcher.renderError(e);
 			e.printStackTrace();
 		}
 	}
@@ -180,6 +184,8 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 			Label dataFineLabel = new Label("Data fine:");
 			Label istitutoLabel = new Label("Istituto:");
 			Label votoLabel = new Label("Voto:");
+			TextField idField = new TextField(f.getId().toString());
+			idField.setVisible(false);
 			TextField titoloFormazioneField = new TextField(f.getTitolo());
 			TextArea descrizioneFormazioneField = new TextArea(f.getDescrizione());
 			DatePicker dataInizioFormazioneField = new DatePicker(f.getDataInizio());
@@ -191,7 +197,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 				aggiungiFormazioneAction(evt);
 			});
 			formazioneGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, istitutoLabel, votoLabel);
-			formazioneGridPane.addColumn(1, titoloFormazioneField, descrizioneFormazioneField, dataInizioFormazioneField, dataFineFormazioneField, istitutoField, votoField, aggiungiFormazioneButton);
+			formazioneGridPane.addColumn(1, titoloFormazioneField, descrizioneFormazioneField, dataInizioFormazioneField, dataFineFormazioneField, istitutoField, votoField, aggiungiFormazioneButton, idField);
 			formazioneTPane.setContent(formazioneGridPane);
 			this.formazioneVBox.getChildren().add(formazioneTPane);
 			this.formazioneScrollPane.setContent(formazioneVBox);
@@ -249,6 +255,8 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 			Label dataFineLabel = new Label("Data fine:");
 			Label aziendaLabel = new Label("Azienda:");
 			Label localitaLabel = new Label("Localita`:");
+			TextField idField = new TextField(esp.getId().toString());
+			idField.setVisible(false);
 			TextField titoloEsperienzaField = new TextField(esp.getTitolo());
 			TextArea descrizioneEsperienzaField = new TextArea(esp.getDescrizione());
 			DatePicker dataInizioEsperienzaField = new DatePicker(esp.getDataInizio());
@@ -260,7 +268,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 				aggiungiEsperienzaAction(evt);
 			});
 			esperienzaGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, aziendaLabel, localitaLabel);
-			esperienzaGridPane.addColumn(1, titoloEsperienzaField, descrizioneEsperienzaField, dataInizioEsperienzaField, dataFineEsperienzaField, aziendaField, localitaField, aggiungiEsperienzaButton);
+			esperienzaGridPane.addColumn(1, titoloEsperienzaField, descrizioneEsperienzaField, dataInizioEsperienzaField, dataFineEsperienzaField, aziendaField, localitaField, aggiungiEsperienzaButton, idField);
 			esperienzaTPane.setContent(esperienzaGridPane);
 			this.esperienzaVBox.getChildren().add(esperienzaTPane);
 			this.esperienzaScrollPane.setContent(esperienzaVBox);
@@ -301,13 +309,21 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	}
 	
 	public void eliminaUtenteAction(ActionEvent event) {
-		
+		try {
+			utenteService.deletePersona(persona);
+			dispatcher.logout();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	@FXML
 	public void salvaAction(ActionEvent event) {
+
 		
 	}
 	
+	@FXML
 	public void annullaAction(ActionEvent event) {
 		dispatcher.loggedIn(persona);
 	}

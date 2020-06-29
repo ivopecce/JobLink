@@ -1,4 +1,0 @@
-4
-1,1-2-5,Tecnico operatore,Si cerca tecnico operatore da inserire in turno.,Fucino,ATTIVA,null
-2,2019-01-05,Specialista networking,Si cerca spcialista in netowrking. Richiesta certificazione CCNA.,Fucino,NON_ATTIVA,Telespazio
-3,1-2-5,[Inserisci titolo offerta],[Inserisci il testo dell'offerta],[Inserisci localita`],ATTIVA,null
