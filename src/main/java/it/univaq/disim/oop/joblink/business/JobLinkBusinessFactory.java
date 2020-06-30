@@ -16,4 +16,6 @@ public abstract class JobLinkBusinessFactory {
 	public abstract ProfiloPersonaService getProfiloPersonaService();
 	
 	public abstract SkillService getSkillService();
+	
+	public abstract MessaggiService getMessaggiService();
 }

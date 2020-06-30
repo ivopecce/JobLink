@@ -53,7 +53,6 @@ public class RisultatiRicercaOfferteController implements Initializable, DataIni
 	public void initialize(URL location, ResourceBundle resources) {
 		titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titoloOfferta"));
 		localitaTableColumn.setCellValueFactory(new PropertyValueFactory<>("localita"));
-		statoTableColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
 		azioniTableColumn.setStyle("-fx-alignment: CENTER;");
 		azioniTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Offerta,Button>, ObservableValue<Button>>() {
 

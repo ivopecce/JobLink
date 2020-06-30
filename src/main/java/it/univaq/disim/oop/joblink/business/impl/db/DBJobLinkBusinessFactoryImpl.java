@@ -3,6 +3,7 @@ package it.univaq.disim.oop.joblink.business.impl.db;
 import java.sql.SQLException;
 
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
+import it.univaq.disim.oop.joblink.business.MessaggiService;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.business.ProfiloPersonaService;
 import it.univaq.disim.oop.joblink.business.SkillService;
@@ -13,6 +14,7 @@ public class DBJobLinkBusinessFactoryImpl extends JobLinkBusinessFactory{
 	private OffertaService offertaService;
 	private ProfiloPersonaService profiloPersonaService;
 	private SkillService skillService;
+	private MessaggiService messaggiService;
 	private DBConnector dbConnector = new DBConnector();
 	
 	public DBJobLinkBusinessFactoryImpl() {
@@ -44,6 +46,11 @@ public class DBJobLinkBusinessFactoryImpl extends JobLinkBusinessFactory{
 	@Override
 	public SkillService getSkillService() {
 		return skillService;
+	}
+
+	@Override
+	public MessaggiService getMessaggiService() {
+		return messaggiService;
 	}
 	
 }

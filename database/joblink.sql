@@ -125,11 +125,18 @@ CREATE TABLE `Messaggio` (
   `testo` text NOT NULL,
   `idPersona` int NOT NULL,
   `idAzienda` int NOT NULL,
+  `mittente` int NOT NULL,
+  `destinatario` int NOT NULL,
+  `data` date NOT NULL,
   PRIMARY KEY (`idMessaggio`),
   KEY `idPersona_idx` (`idPersona`),
   KEY `idAzienda_idx` (`idAzienda`),
+  KEY `mittente_idx` (`mittente`),
+  KEY `destinatario_idx` (`destinatario`),
+  CONSTRAINT `destinatario` FOREIGN KEY (`destinatario`) REFERENCES `Utente` (`idUtente`),
   CONSTRAINT `idAzienda` FOREIGN KEY (`idAzienda`) REFERENCES `Azienda` (`idAzienda`),
-  CONSTRAINT `idPersona` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `idPersona` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `mittente` FOREIGN KEY (`mittente`) REFERENCES `Utente` (`idUtente`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1015,4 +1022,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-30 17:04:18
+-- Dump completed on 2020-06-30 19:23:32

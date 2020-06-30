@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.disim.oop.joblink.controller.MessaggiController">
+   <children>
+      <Label prefHeight="65.0" prefWidth="461.0" text="Messaggi">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TabPane prefHeight="468.0" prefWidth="730.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Ricevuti">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="messaggiRicevutiTable" prefHeight="464.0" prefWidth="730.0">
+                          <columns>
+                              <TableColumn fx:id="mittenteColumn" prefWidth="167.0" text="Da" />
+                            <TableColumn fx:id="oggettoRColumn" prefWidth="328.0" text="Oggetto" />
+                              <TableColumn fx:id="dataRicezioneColumn" prefWidth="128.0" text="Ricevuto" />
+                              <TableColumn fx:id="azioniRColumn" prefWidth="106.0" text="Azioni" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Inviati">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="messaggiRicevutiTable1" prefHeight="464.0" prefWidth="730.0">
+                           <columns>
+                              <TableColumn fx:id="destinatarioColumn" prefWidth="167.0" text="A" />
+                              <TableColumn fx:id="oggettoIColumn" prefWidth="328.0" text="Oggetto" />
+                              <TableColumn fx:id="dataInvioColumn" prefWidth="128.0" text="Inviato" />
+                              <TableColumn fx:id="azioniIcolumn" prefWidth="106.0" text="Azioni" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>
