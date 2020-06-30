@@ -14,6 +14,9 @@ public interface OffertaService {
 	
 	List<Offerta> findOfferteAttinenti(Persona persona) throws BusinessException;
 	
+	List<Offerta> findOfferteByTitolo(String titolo) throws BusinessException;
+	List<Offerta> findOfferteByLocalita(String localita) throws BusinessException;
+	
 	void createOfferta(Offerta offerta) throws BusinessException;
 
 	void updateOfferta(Offerta offerta) throws BusinessException;

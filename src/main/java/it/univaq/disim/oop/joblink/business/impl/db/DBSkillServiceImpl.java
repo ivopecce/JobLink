@@ -11,6 +11,7 @@ import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.SkillService;
 import it.univaq.disim.oop.joblink.domain.LivelloSkill;
 import it.univaq.disim.oop.joblink.domain.Offerta;
+import it.univaq.disim.oop.joblink.domain.Possiede;
 import it.univaq.disim.oop.joblink.domain.Richiesta;
 import it.univaq.disim.oop.joblink.domain.Skill;
 
@@ -111,6 +112,52 @@ public class DBSkillServiceImpl implements SkillService {
 			String sql = "DELETE FROM Richiesta WHERE idRichiesta=?;";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
 			ps.setInt(1, richiesta.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void createPossiede(Possiede possiede) throws BusinessException {
+		try {
+			String sql = "CALL create_possiede(?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, possiede.getPersona().getId());
+			ps.setString(2, possiede.getSkill().getSkill());
+			ps.setString(3, possiede.getLivelloPosseduto().toString());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void updatePossiede(Possiede possiede) throws BusinessException {
+		try {
+			String sql = "CALL update_possiede(?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, possiede.getId());
+			ps.setString(2, possiede.getSkill().getSkill());
+			ps.setString(3, possiede.getLivelloPosseduto().toString());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void deletePossiede(Possiede possiede) throws BusinessException {
+		try {
+			String sql = "CALL delete_possiede(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, possiede.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

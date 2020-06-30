@@ -15,11 +15,18 @@ import it.univaq.disim.oop.joblink.domain.Esperienza;
 import it.univaq.disim.oop.joblink.domain.Formazione;
 import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.LivelloSkill;
+import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Possiede;
 import it.univaq.disim.oop.joblink.domain.Skill;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -33,8 +40,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class ProfiloUtenteController implements Initializable, DataInitializable<Persona> {
 
@@ -81,13 +91,13 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	@FXML
 	private TableColumn<Esperienza, Button> azioniEColumn;
 	@FXML
-	private TableView<Skill> skillTable;
+	private TableView<Possiede> skillTable;
 	@FXML 
-	private TableColumn<Skill, String> skillColumn;
+	private TableColumn<Possiede, String> skillColumn;
 	@FXML 
-	private TableColumn<Skill, LivelloSkill> livelloColumn;
+	private TableColumn<Possiede, LivelloSkill> livelloColumn;
 	@FXML 
-	private TableColumn<Skill, Button> azioniSColumn;	
+	private TableColumn<Possiede, Button> azioniSColumn;	
 	@FXML
 	private Button eliminaUtenteButton;
 	@FXML
@@ -100,10 +110,6 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	private ProfiloPersonaService profiloPersonaService;
 	private UtenteService utenteService;
 	
-	private List<Esperienza> esperienzaList = new ArrayList<>();
-	private List<Formazione> formazioneList = new ArrayList<>();
-	private List<Possiede> possiedeList = new ArrayList<>();
-
 	
 	public ProfiloUtenteController() {
 		dispatcher = ViewDispatcher.getInstance();
@@ -116,19 +122,91 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	public void initialize(URL location, ResourceBundle resources) {
 		this.genereComboBox.getItems().addAll(Genere.values());
 		this.usernameField.setEditable(false);
+		
+		/*Inizializza tabella Formazione*/
+		titoloFormazioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+		dataInizioFColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+		dataFineFColumn.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+		istitutoColumn.setCellValueFactory(new PropertyValueFactory<>("istituto"));
+		votoColumn.setCellValueFactory(new PropertyValueFactory<>("voto"));
+		azioniFColumn.setStyle("-fx-alignment: CENTER;");
+		azioniFColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Formazione,Button>, ObservableValue<Button>>() {
 
+			@Override
+			public ObservableValue<Button> call(CellDataFeatures<Formazione, Button> param) {
+				final Button formazioneButton= new Button("Modifica");
+				formazioneButton.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						dispatcher.renderView("formazione", param.getValue());
+						
+					}
+				});
+				
+				return new SimpleObjectProperty<Button>(formazioneButton);
+			}
+		});
+		
+		/*Inizializza tabella Esperienza*/
+		titoloEsperienzaColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+		dataInizioEColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+		dataFineEColumn.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+		aziendaColumn.setCellValueFactory(new PropertyValueFactory<>("azienda"));
+		azioniEColumn.setStyle("-fx-alignment: CENTER;");
+		azioniEColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Esperienza,Button>, ObservableValue<Button>>() {
+
+			@Override
+			public ObservableValue<Button> call(CellDataFeatures<Esperienza, Button> param) {
+				final Button esperienzaButton= new Button("Modifica");
+				esperienzaButton.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						dispatcher.renderView("esperienza", param.getValue());
+						
+					}
+				});
+				
+				return new SimpleObjectProperty<Button>(esperienzaButton);
+			}
+		});
+		
+		/*Inizializza tabella Skill*/
+		skillColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Possiede,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Possiede, String> param) {
+				return new SimpleStringProperty(param.getValue().getSkill().getSkill());
+			}
+		});
+		livelloColumn.setCellValueFactory(new PropertyValueFactory<>("livelloPosseduto"));
+		azioniSColumn.setStyle("-fx-alignment: CENTER;");
+		azioniSColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Possiede,Button>, ObservableValue<Button>>() {
+
+			@Override
+			public ObservableValue<Button> call(CellDataFeatures<Possiede, Button> param) {
+				final Button skillButton= new Button("Modifica");
+				skillButton.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						dispatcher.renderView("skill", param.getValue());
+						
+					}
+				});
+				
+				return new SimpleObjectProperty<Button>(skillButton);
+			}
+		});
+		
 	}
 	
 	@Override
 	public void initializeData(Persona persona) {
 		this.persona = persona;
 		try {
-			formazioneList = profiloPersonaService.findAllFormazione(persona);
-			loadFormazione(formazioneList);
-			esperienzaList = profiloPersonaService.findAllEsperienza(persona);
-			loadEsperienza(esperienzaList);
-			possiedeList = profiloPersonaService.findAllSkill(persona);
-			loadSkill(possiedeList);
+			/*Inizializza i dati del profilo utente*/
 			this.nomeField.setText(persona.getNome());
 			this.cognomeField.setText(persona.getCognome());
 			this.dataNascitaField.setValue(persona.getDataDiNascita());
@@ -137,202 +215,44 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 			this.usernameField.setText(persona.getUsername());
 			this.emailField.setText(persona.getEmail());
 			this.telefonoField.setText(persona.getTelefono());
+			
+			/*Inizializza i dati della formazione della persona*/
+			List<Formazione> formazioneList = profiloPersonaService.findAllFormazione(persona);
+			ObservableList<Formazione> formazioneData = FXCollections.observableArrayList(formazioneList);
+			formazioneTable.setItems(formazioneData);
+			
+			/*Inizializza i dati dell'esperienza della persona*/
+			List<Esperienza> esperienzaList = profiloPersonaService.findAllEsperienza(persona);
+			ObservableList<Esperienza> esperienzaData = FXCollections.observableArrayList(esperienzaList);
+			esperienzaTable.setItems(esperienzaData);
+			
+			/*Inizializza i dati delle skill della persona*/
+			List<Possiede> possiedeList = profiloPersonaService.findAllSkill(persona);
+			ObservableList<Possiede> possiedeData = FXCollections.observableArrayList(possiedeList);
+			skillTable.setItems(possiedeData);
+			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void loadSkill(List<Possiede> possiede) {
-		if(possiede.isEmpty()) aggiungiSkillAction(ActionEvent);
-		
-		for(Possiede p : possiede) {
-			int index = gridSkill.getRowCount();
-			for (Node n : gridSkill.getChildren()) {
-		        Integer row = GridPane.getRowIndex(n);
-		        if (row != null && row.intValue() >= index) {
-		        	row+=1;
-		            GridPane.setRowIndex(n, row);
-		        }
-		    }
-			Label l = new Label("Skill:");
-			TextField skillField = new TextField(p.getSkill().getSkill());
-			Label l1 = new Label("Livello:");
-			ComboBox livelloComboBox = new ComboBox<LivelloSkill>();
-			livelloComboBox.getItems().addAll(LivelloSkill.values());
-			livelloComboBox.setValue(p.getLivelloPosseduto());
-			Button aggiungiSkillButton = new Button("+");
-			aggiungiSkillButton.setOnAction(evt -> {
-				aggiungiSkillAction(evt);
-			});
-			
-			gridSkill.addRow(index, l, skillField, l1, livelloComboBox, aggiungiSkillButton);
-		}
-	}
-	
-	public void aggiungiSkillAction(ActionEvent event) {
-		int index = gridSkill.getRowCount();
-		for (Node n : gridSkill.getChildren()) {
-	        Integer row = GridPane.getRowIndex(n);
-	        if (row != null && row.intValue() >= index) {
-	        	row+=1;
-	            GridPane.setRowIndex(n, row);
-	        }
-	    }
-		Label l = new Label("Skill:");
-		TextField skillField = new TextField();
-		Label l1 = new Label("Livello:");
-		ComboBox livelloComboBox = new ComboBox<String>();
-		Button aggiungiSkillButton = new Button("+");
-		aggiungiSkillButton.setOnAction(evt -> {
-			aggiungiSkillAction(evt);
-		});
-		
-		gridSkill.addRow(index, l, skillField, l1, livelloComboBox, aggiungiSkillButton);
-	}
-	
-	public void rimuoviSkillAction(ActionEvent event) {
-		
-	}
-	
-	public void loadFormazione(List<Formazione> formazione) {
-		if(formazione.isEmpty()) {
-			aggiungiFormazioneAction(ActionEvent);
-			
-		}
-		for(Formazione f : formazione) {
-			TitledPane formazioneTPane = new TitledPane();
-			formazioneTPane.setText(f.getTitolo());
-			GridPane formazioneGridPane = new GridPane();
-			GridPane.setRowIndex(formazioneGridPane, 7);
-			GridPane.setColumnIndex(formazioneGridPane, 2);
-			Label titoloLabel = new Label("Titolo:");
-			Label descrizioneLabel = new Label("Descrizione:");
-			Label dataInizioLabel = new Label("Data inizo:");
-			Label dataFineLabel = new Label("Data fine:");
-			Label istitutoLabel = new Label("Istituto:");
-			Label votoLabel = new Label("Voto:");
-			TextField idField = new TextField(f.getId().toString());
-			idField.setVisible(false);
-			TextField titoloFormazioneField = new TextField(f.getTitolo());
-			TextArea descrizioneFormazioneField = new TextArea(f.getDescrizione());
-			DatePicker dataInizioFormazioneField = new DatePicker(f.getDataInizio());
-			DatePicker dataFineFormazioneField = new DatePicker(f.getDataFine());
-			TextField istitutoField = new TextField(f.getIstituto());
-			TextField votoField = new TextField(f.getVoto().toString());
-			Button aggiungiFormazioneButton = new Button("Aggiungi formazione");
-			aggiungiFormazioneButton.setOnAction(evt -> {
-				aggiungiFormazioneAction(evt);
-			});
-			formazioneGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, istitutoLabel, votoLabel);
-			formazioneGridPane.addColumn(1, titoloFormazioneField, descrizioneFormazioneField, dataInizioFormazioneField, dataFineFormazioneField, istitutoField, votoField, aggiungiFormazioneButton, idField);
-			formazioneTPane.setContent(formazioneGridPane);
-			this.formazioneVBox.getChildren().add(formazioneTPane);
-			this.formazioneScrollPane.setContent(formazioneVBox);
-		}
-	}
-	
 	public void aggiungiFormazioneAction(ActionEvent event) {
-		TitledPane formazioneTPane = new TitledPane();
-		formazioneTPane.setText("Formazione");
-		GridPane formazioneGridPane = new GridPane();
-		GridPane.setRowIndex(formazioneGridPane, 7);
-		GridPane.setColumnIndex(formazioneGridPane, 2);
-		Label titoloLabel = new Label("Titolo:");
-		Label descrizioneLabel = new Label("Descrizione:");
-		Label dataInizioLabel = new Label("Data inizo:");
-		Label dataFineLabel = new Label("Data fine:");
-		Label istitutoLabel = new Label("Istituto:");
-		Label votoLabel = new Label("Voto:");
-		TextField titoloFormazioneField = new TextField();
-		TextArea descrizioneFormazioneField = new TextArea();
-		DatePicker dataInizioFormazioneField = new DatePicker();
-		DatePicker dataFineFormazioneField = new DatePicker();
-		TextField istitutoField = new TextField();
-		TextField votoField = new TextField();
-		Button aggiungiFormazioneButton = new Button("Aggiungi formazione");
-		aggiungiFormazioneButton.setOnAction(evt -> {
-			aggiungiFormazioneAction(evt);
-		});
-		formazioneGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, istitutoLabel, votoLabel);
-		formazioneGridPane.addColumn(1, titoloFormazioneField, descrizioneFormazioneField, dataInizioFormazioneField, dataFineFormazioneField, istitutoField, votoField, aggiungiFormazioneButton);
-		formazioneTPane.setContent(formazioneGridPane);
-		this.formazioneVBox.getChildren().add(formazioneTPane);
-		this.formazioneScrollPane.setContent(formazioneVBox);
-		
-		
-		
-	}
-	
-	public void eliminaFormazioneAction(ActionEvent event) {
-		
-	}
-	
-	public void loadEsperienza(List<Esperienza> esperienza) {
-		if(esperienza.isEmpty()) aggiungiEsperienzaAction(ActionEvent);
-		
-		for(Esperienza esp : esperienza) {
-			TitledPane esperienzaTPane = new TitledPane();
-			esperienzaTPane.setText("Esperienza");
-			GridPane esperienzaGridPane = new GridPane();
-			GridPane.setRowIndex(esperienzaGridPane, 7);
-			GridPane.setColumnIndex(esperienzaGridPane, 2);
-			Label titoloLabel = new Label("Titolo:");
-			Label descrizioneLabel = new Label("Descrizione:");
-			Label dataInizioLabel = new Label("Data inizo:");
-			Label dataFineLabel = new Label("Data fine:");
-			Label aziendaLabel = new Label("Azienda:");
-			Label localitaLabel = new Label("Localita`:");
-			TextField idField = new TextField(esp.getId().toString());
-			idField.setVisible(false);
-			TextField titoloEsperienzaField = new TextField(esp.getTitolo());
-			TextArea descrizioneEsperienzaField = new TextArea(esp.getDescrizione());
-			DatePicker dataInizioEsperienzaField = new DatePicker(esp.getDataInizio());
-			DatePicker dataFineEsperienzaField = new DatePicker(esp.getDataFine());
-			TextField aziendaField = new TextField(esp.getAzienda());
-			TextField localitaField = new TextField(esp.getLocalita());
-			Button aggiungiEsperienzaButton = new Button("Aggiungi esperienza");
-			aggiungiEsperienzaButton.setOnAction(evt -> {
-				aggiungiEsperienzaAction(evt);
-			});
-			esperienzaGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, aziendaLabel, localitaLabel);
-			esperienzaGridPane.addColumn(1, titoloEsperienzaField, descrizioneEsperienzaField, dataInizioEsperienzaField, dataFineEsperienzaField, aziendaField, localitaField, aggiungiEsperienzaButton, idField);
-			esperienzaTPane.setContent(esperienzaGridPane);
-			this.esperienzaVBox.getChildren().add(esperienzaTPane);
-			this.esperienzaScrollPane.setContent(esperienzaVBox);
-		}
+		Formazione f = new Formazione();
+		f.setPersona(this.persona);
+		dispatcher.renderView("formazione", f);
 	}
 	
 	public void aggiungiEsperienzaAction(ActionEvent event) {
-		TitledPane esperienzaTPane = new TitledPane();
-		esperienzaTPane.setText("Esperienza");
-		GridPane esperienzaGridPane = new GridPane();
-		GridPane.setRowIndex(esperienzaGridPane, 7);
-		GridPane.setColumnIndex(esperienzaGridPane, 2);
-		Label titoloLabel = new Label("Titolo:");
-		Label descrizioneLabel = new Label("Descrizione:");
-		Label dataInizioLabel = new Label("Data inizo:");
-		Label dataFineLabel = new Label("Data fine:");
-		Label aziendaLabel = new Label("Azienda:");
-		Label localitaLabel = new Label("Localita`:");
-		TextField titoloEsperienzaField = new TextField();
-		TextArea descrizioneEsperienzaField = new TextArea();
-		DatePicker dataInizioEsperienzaField = new DatePicker();
-		DatePicker dataFineEsperienzaField = new DatePicker();
-		TextField aziendaField = new TextField();
-		TextField localitaField = new TextField();
-		Button aggiungiEsperienzaButton = new Button("Aggiungi esperienza");
-		aggiungiEsperienzaButton.setOnAction(evt -> {
-			aggiungiEsperienzaAction(evt);
-		});
-		esperienzaGridPane.addColumn(0, titoloLabel, descrizioneLabel, dataInizioLabel, dataFineLabel, aziendaLabel, localitaLabel);
-		esperienzaGridPane.addColumn(1, titoloEsperienzaField, descrizioneEsperienzaField, dataInizioEsperienzaField, dataFineEsperienzaField, aziendaField, localitaField, aggiungiEsperienzaButton);
-		esperienzaTPane.setContent(esperienzaGridPane);
-		this.esperienzaVBox.getChildren().add(esperienzaTPane);
-		this.esperienzaScrollPane.setContent(esperienzaVBox);
+		Esperienza esp = new Esperienza();
+		esp.setPersona(this.persona);
+		dispatcher.renderView("esperienza", esp);
 	}
 	
-	public void rimuoviEsperienzaAction(ActionEvent event) {
-		
+	public void aggiungiSkillAction(ActionEvent event) {
+		Possiede p = new Possiede();
+		p.setPersona(this.persona);
+		p.setSkill(new Skill());
+		dispatcher.renderView("skill", p);
 	}
 	
 	public void eliminaUtenteAction(ActionEvent event) {
@@ -346,7 +266,22 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	@FXML
 	public void salvaAction(ActionEvent event) {
-		
+		try {
+			persona.setCognome(cognomeField.getText());
+			persona.setNome(nomeField.getText());
+			persona.setDataDiNascita(dataNascitaField.getValue());
+			persona.setGenere(genereComboBox.getValue());
+			persona.setResidenza(residenzaField.getText());
+			persona.setEmail(emailField.getText());
+			persona.setTelefono(telefonoField.getText());
+			
+			utenteService.updatePersona(persona);
+			
+			dispatcher.loggedIn(persona);
+			
+		} catch (BusinessException e) {
+			dispatcher.renderError(e);
+		}
 		
 	}
 	

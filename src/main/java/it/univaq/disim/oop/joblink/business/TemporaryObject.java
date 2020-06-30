@@ -6,10 +6,15 @@ import it.univaq.disim.oop.joblink.domain.Persona;
 public class TemporaryObject {
 	private Persona persona;
 	private Offerta offerta;
+	private String cercaTitolo;
+	private String cercaLocalita;
 	
 	public TemporaryObject(Offerta offerta, Persona persona) {
 		this.persona = persona;
 		this.offerta = offerta;
+	}
+	
+	public TemporaryObject() {
 	}
 
 	public Persona getPersona() {
@@ -26,6 +31,22 @@ public class TemporaryObject {
 
 	public void setOfferta(Offerta offerta) {
 		this.offerta = offerta;
+	}
+
+	public String getCercaTitolo() {
+		return cercaTitolo;
+	}
+
+	public void setCercaTitolo(String cercaTitolo) {
+		this.cercaTitolo = cercaTitolo;
+	}
+
+	public String getCercaLocalita() {
+		return cercaLocalita;
+	}
+
+	public void setCercaLocalita(String cercaLocalita) {
+		this.cercaLocalita = cercaLocalita;
 	}
 	
 	

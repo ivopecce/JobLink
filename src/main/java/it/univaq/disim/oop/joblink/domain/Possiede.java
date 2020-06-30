@@ -1,10 +1,17 @@
 package it.univaq.disim.oop.joblink.domain;
 
 public class Possiede {
+	private Integer id;
 	private Persona persona;
 	private Skill skill;
 	private LivelloSkill livelloPosseduto;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public Persona getPersona() {
 		return persona;
 	}

@@ -58,16 +58,16 @@ DROP TABLE IF EXISTS `Esperienza`;
 CREATE TABLE `Esperienza` (
   `idEsperienza` int NOT NULL AUTO_INCREMENT,
   `titolo` varchar(100) NOT NULL,
-  `azienda` varchar(45) NOT NULL,
-  `dataInizio` datetime NOT NULL,
-  `dataFine` datetime NOT NULL,
   `descrizione` text NOT NULL,
+  `azienda` varchar(45) NOT NULL,
+  `dataInizio` date NOT NULL,
+  `dataFine` date DEFAULT NULL,
   `localita` varchar(45) NOT NULL,
   `idPersona` int NOT NULL,
   PRIMARY KEY (`idEsperienza`),
   KEY `idP_idx` (`idPersona`),
   CONSTRAINT `idP` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,6 +76,7 @@ CREATE TABLE `Esperienza` (
 
 LOCK TABLES `Esperienza` WRITE;
 /*!40000 ALTER TABLE `Esperienza` DISABLE KEYS */;
+INSERT INTO `Esperienza` VALUES (3,'Lorem Ipsum','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congue nec ipsum in volutpat. Ut pharetra elit in nisi ullamcorper, ac malesuada lectus euismod. In hac habitasse platea dictumst. Proin eget orci enim. Morbi non dui porta, pharetra neque eget, efficitur lectus. Vestibulum velit nulla, lobortis vel mi et, pellentesque convallis leo. Donec commodo neque non eros facilisis, et mollis leo luctus. Ut venenatis ante eleifend, gravida nulla sed, interdum dui. Vivamus at tortor et leo molestie ornare. Nulla rhoncus, diam non pretium facilisis, tellus lacus lacinia urna, a dictum nisl lacus id nisl. Aenean tempor eros ac lorem vestibulum efficitur. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus eu mauris faucibus, sollicitudin nibh eu, tempor urna. Cras id metus non lectus feugiat porta.','Telespazio','2017-06-09','2020-06-10','Fucino',1);
 /*!40000 ALTER TABLE `Esperienza` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +99,7 @@ CREATE TABLE `Formazione` (
   PRIMARY KEY (`idFormazione`,`titolo`,`istituto`),
   KEY `idPerso_idx` (`idPersona`),
   CONSTRAINT `idPerso` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +221,7 @@ CREATE TABLE `Possiede` (
   KEY `idSkil_idx` (`idSkill`),
   CONSTRAINT `idPer` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `idSkil` FOREIGN KEY (`idSkill`) REFERENCES `Skill` (`idSkill`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +304,7 @@ CREATE TABLE `Skill` (
   `idSkill` int NOT NULL AUTO_INCREMENT,
   `skill` varchar(45) NOT NULL,
   PRIMARY KEY (`idSkill`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +313,7 @@ CREATE TABLE `Skill` (
 
 LOCK TABLES `Skill` WRITE;
 /*!40000 ALTER TABLE `Skill` DISABLE KEYS */;
-INSERT INTO `Skill` VALUES (1,'networking'),(2,'programmazione');
+INSERT INTO `Skill` VALUES (1,'networking'),(2,'programmazione'),(3,'test');
 /*!40000 ALTER TABLE `Skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,6 +352,71 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'joblink'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `create_esperienza` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_esperienza`(_titolo char(100), _descrizione text, _azienda char(45), _dataInizio date, _dataFine date, _localita char(45), _idPersona integer)
+BEGIN
+	INSERT INTO Esperienza(titolo, descrizione, azienda, dataInizio, dataFine, localita, idPersona) VALUES (_titolo, _descrizione, _azienda, _dataInizio, _dataFine, _localita, _idPersona);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `create_formazione` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_formazione`(_titolo char(100), _descrizione text, _istituto char(100), _dataInizio date, _dataFine date, _voto integer, _idPersona integer)
+BEGIN
+	INSERT INTO Formazione(titolo, descrizione, istituto, dataInizio, dataFine, voto, idPersona) VALUES (_titolo, _descrizione, _istituto, _dataInizio, _dataFine, _voto, _idPersona);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `create_possiede` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_possiede`(_idPersona integer, _skill char(45), _livello char(8))
+BEGIN
+	DECLARE _idSkill integer;
+    SET _idSkill = (SELECT idSkill FROM Skill WHERE skill = _skill);
+    IF _idSkill IS NULL THEN BEGIN
+		INSERT INTO Skill (skill) VALUES (_skill);
+		SET _idSkill = last_insert_id();
+	END;
+    END IF;
+    
+    INSERT INTO Possiede (idPersona, idSkill, livelloPosseduto) VALUES (_idpersona, _idSkill, _livello);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `create_richiesta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -399,6 +465,44 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_esperienza` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_esperienza`(_idEsperienza integer)
+BEGIN
+	DELETE FROM Esperienza WHERE idEsperienza=_idEsperienza;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_formazione` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_formazione`(_idFormazione integer)
+BEGIN
+	DELETE FROM Formazione WHERE idFormazione=_idFormazione;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `delete_persona` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -420,6 +524,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_possiede` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_possiede`(_idPossiede integer)
+BEGIN
+	DELETE FROM Possiede WHERE idPossiede = _idPossiede;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `find_esperienza` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -434,7 +557,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `find_esperienza`(_idUtente integer)
 BEGIN
 	SELECT idEsperienza, titolo, azienda, dataInizio, dataFine, descrizione, localita
     FROM Esperienza
-    WHERE idPersona = _idUtente;
+    WHERE idPersona = _idUtente
+    ORDER BY dataFine desc;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -455,7 +579,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `find_formazione`(_IDPersona integer
 BEGIN
 	SELECT idFormazione, titolo, descrizione, istituto, dataInizio, dataFine, voto
     FROM Formazione
-    WHERE idPersona = _IDPersona;
+    WHERE idPersona = _IDPersona
+    ORDER BY dataFine desc;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `find_localita` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find_localita`(_localita char(100))
+BEGIN
+	SELECT * FROM Offerta WHERE localita LIKE CONCAT("%", _localita, "%") AND stato = "ATTIVA";
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -474,9 +618,28 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `find_skill`(_idUtente integer)
 BEGIN
-	SELECT Skill.idSkill, Skill.skill, Possiede.livelloPosseduto
+	SELECT Skill.idSkill, Skill.skill, Possiede.livelloPosseduto, Possiede.idPossiede
     FROM Skill INNER JOIN Possiede ON Skill.idSkill = Possiede.idSkill
     WHERE Possiede.idPersona = _idUtente;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `find_titolo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find_titolo`(_titolo char(100))
+BEGIN
+	SELECT * FROM Offerta WHERE titoloOfferta LIKE CONCAT("%", _titolo, "%") AND stato = "ATTIVA";
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -728,6 +891,93 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_esperienza` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_esperienza`(_idEsperienza integer, _titolo char(100), _descrizione text, _azienda char(45), _dataInizio date, _dataFine date, _localita char(45))
+BEGIN
+	UPDATE Esperienza SET titolo=_titolo, descrizione=_descrizione, azienda=_azienda, dataInizio=_dataInizio, dataFine=_dataFine, localita=_localita WHERE idEsperienza=_idEsperienza;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_formazione` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_formazione`(_idFormazione integer, _titolo char(100), _descrizione text, _istituto char(100), _dataInizio date, _dataFine date, _voto integer)
+BEGIN
+	UPDATE Formazione SET titolo=_titolo, descrizione=_descrizione, istituto=_istituto, dataInizio=_dataInizio, dataFine=_dataFine, voto=_voto WHERE idFormazione=_idFormazione;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_persona` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_persona`(_idPersona integer, _cognome char(45), _nome char(45), _dataNascita date, _genere char(45), _residenza char(45), _email char(45), _telefono char(45) )
+BEGIN
+	DECLARE _idUtente integer;
+    SET _idUtente = (SELECT idUtente FROM Persona WHERE idPersona = _idPersona);
+    UPDATE Utente SET telefono = _telefono, email=_email WHERE idUtente = _idUtente;
+    UPDATE Persona SET cognome = _cognome, nome = _nome, dataDiNascita = _dataNascita, genere = _genere, residenza = _residenza WHERE idPersona = _idPersona;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_possiede` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_possiede`(_idPossiede integer, _skill char(45), _livello char(8))
+BEGIN
+	DECLARE _idSkill integer;
+    SET _idSkill = (SELECT idSkill FROM Skill WHERE skill = _skill);
+    IF _idSkill IS NULL THEN BEGIN
+		INSERT INTO Skill (skill) VALUES (_skill);
+		SET _idSkill = last_insert_id();
+	END;
+    END IF;
+    
+    UPDATE Possiede SET idSkill = _idSkill, livelloPosseduto = _livello WHERE idPossiede = _idPossiede;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `update_richiesta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -765,4 +1015,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-29 18:45:23
+-- Dump completed on 2020-06-30 17:04:18

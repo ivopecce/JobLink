@@ -43,7 +43,7 @@ public class OffertaUtenteController implements DataInitializable<TemporaryObjec
 	private Button indietroButton;
 	
 	private ViewDispatcher dispatcher;
-	private OffertaService OffertaService;
+	private OffertaService offertaService;
 	private SkillService skillService;
 	private Offerta offerta;
 	private Persona persona;
@@ -51,7 +51,7 @@ public class OffertaUtenteController implements DataInitializable<TemporaryObjec
 	public OffertaUtenteController() {
 		dispatcher = ViewDispatcher.getInstance();
 		JobLinkBusinessFactory factory = JobLinkBusinessFactory.getInstance();
-		OffertaService = factory.getOffertaService();
+		offertaService = factory.getOffertaService();
 		skillService = factory.getSkillService();
 	}
 	
@@ -76,7 +76,7 @@ public class OffertaUtenteController implements DataInitializable<TemporaryObjec
 			this.dataInserimentoLabel.setText(offerta.getDataCreazione().toString());
 			this.aziendaField.setText(offerta.getAzienda().getDenominazione());
 			this.skillRichiesteField.setText(skillService.skillRichieste(this.offerta).toString());
-			switch (OffertaService.getCandidatura(offerta, persona).toString()) {
+			switch (offertaService.getCandidatura(offerta, persona).toString()) {
 			case "true":
 				this.candidatoLabel.setText("Si");
 				break;
@@ -97,7 +97,7 @@ public class OffertaUtenteController implements DataInitializable<TemporaryObjec
 	@FXML
 	public void candidatiAction(ActionEvent event) {
 		try {
-			OffertaService.SetCandidatura(this.offerta, this.persona, true);
+			offertaService.SetCandidatura(this.offerta, this.persona, true);
 			initializeData(new TemporaryObject(this.offerta, this.persona));
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class OffertaUtenteController implements DataInitializable<TemporaryObjec
 	@FXML
 	public void ritiraCandidaturaAction(ActionEvent event) {
 		try {
-			OffertaService.SetCandidatura(this.offerta, this.persona, false);
+			offertaService.SetCandidatura(this.offerta, this.persona, false);
 			initializeData(new TemporaryObject(this.offerta, this.persona));
 		} catch (BusinessException e) {
 			e.printStackTrace();

@@ -41,7 +41,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 				formazione.setDescrizione(rs.getString(3));
 				formazione.setIstituto(rs.getString(4));
 				formazione.setDataInizio(LocalDate.parse(rs.getString(5)));
-				formazione.setDataFine(LocalDate.parse(rs.getString(6)));
+				if(rs.getDate(6) != null) formazione.setDataFine(LocalDate.parse(rs.getString(6)));
 				formazione.setVoto(rs.getInt(7));
 				formazione.setPersona(persona);
 				result.add(formazione);
@@ -68,7 +68,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 				esperienza.setTitolo(rs.getString(2));
 				esperienza.setAzienda(rs.getString(3));
 				esperienza.setDataInizio(LocalDate.parse(rs.getString(4)));
-				esperienza.setDataFine(LocalDate.parse(rs.getString(5)));
+				if(rs.getDate(5) != null) esperienza.setDataFine(LocalDate.parse(rs.getString(5)));
 				esperienza.setDescrizione(rs.getString(6));
 				esperienza.setLocalita(rs.getString(7));
 				esperienza.setPersona(persona);
@@ -93,6 +93,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 			while(rs.next()) {
 				Skill skill = new Skill();
 				Possiede possiede = new Possiede();
+				possiede.setId(rs.getInt(4));
 				skill.setId(rs.getInt(1));
 				skill.setSkill(rs.getString(2));
 				possiede.setSkill(skill);
@@ -111,10 +112,128 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 				result.add(possiede);
 			}
 			return result;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new BusinessException(e);
 		}
+	}
+
+	@Override
+	public void createFormazione(Formazione formazione) throws BusinessException {
+		try {
+			String sql = "CALL create_formazione(?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, formazione.getTitolo());
+			ps.setString(2, formazione.getDescrizione());
+			ps.setString(3, formazione.getIstituto());
+			ps.setString(4, formazione.getDataInizio().toString());
+			if(formazione.getDataFine().equals(null)) ps.setString(5, null);
+			else ps.setString(5, formazione.getDataFine().toString());
+			ps.setInt(6, formazione.getVoto());
+			ps.setInt(7, formazione.getPersona().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void updateFormazione(Formazione formazione) throws BusinessException {
+		try {
+			String sql = "CALL update_formazione(?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, formazione.getId());
+			ps.setString(2, formazione.getTitolo());
+			ps.setString(3, formazione.getDescrizione());
+			ps.setString(4, formazione.getIstituto());
+			ps.setString(5, formazione.getDataInizio().toString());
+			if(formazione.getDataFine().equals(null)) ps.setString(6, null);
+			else ps.setString(6, formazione.getDataFine().toString());
+			ps.setInt(7, formazione.getVoto());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void deleteFormazione(Formazione formazione) throws BusinessException {
+		try {
+			String sql = "CALL delete_formazione(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, formazione.getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void createEsperienza(Esperienza esperienza) throws BusinessException {
+		try {
+			String sql = "CALL create_esperienza(?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, esperienza.getTitolo());
+			ps.setString(2, esperienza.getDescrizione());
+			ps.setString(3, esperienza.getAzienda());
+			ps.setString(4, esperienza.getDataInizio().toString());
+			if(esperienza.getDataFine() == null) ps.setString(5, null);
+			else ps.setString(5, esperienza.getDataFine().toString());
+			ps.setString(6, esperienza.getLocalita());
+			ps.setInt(7, esperienza.getPersona().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void updateEsperienza(Esperienza esperienza) throws BusinessException {
+		try {
+			String sql = "CALL update_esperienza(?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, esperienza.getId());
+			ps.setString(2, esperienza.getTitolo());
+			ps.setString(3, esperienza.getDescrizione());
+			ps.setString(4, esperienza.getAzienda());
+			ps.setString(5, esperienza.getDataInizio().toString());
+			if(esperienza.getDataFine().equals(null)) ps.setString(6, null);
+			else ps.setString(6, esperienza.getDataFine().toString());
+			ps.setString(7, esperienza.getLocalita());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
+	}
+
+	@Override
+	public void deleteEsperienza(Esperienza esperienza) throws BusinessException {
+		try {
+			String sql = "CALL delete_esperienza(?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, esperienza.getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+		
 	}
 
 }

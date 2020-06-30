@@ -49,6 +49,7 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		statoOfferta.getItems().addAll(StatoOfferta.values());
+		salvaButton.disableProperty().bind(testo.textProperty().isEmpty());
 	}
 	
 	@Override
@@ -59,7 +60,6 @@ public class OffertaController implements Initializable, DataInitializable<Offer
 		this.localita.setText(offerta.getLocalita());
 		this.dataInserimento.setText(offerta.getDataCreazione().toString());
 		this.statoOfferta.setValue(offerta.getStato());
-		salvaButton.disableProperty().bind(testo.textProperty().isEmpty());
 	}
 	
 	@FXML

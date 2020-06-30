@@ -13,4 +13,6 @@ public interface UtenteService {
 	void registerPersona(String username, String password, String email, String telefono, String cognome, String nome, LocalDate dataDiNascita, String genere, String residenza) throws SQLException, BusinessException;
 	void deletePersona(Persona persona) throws BusinessException;
 	void deleteAzienda(Azienda azienda) throws BusinessException;
+	void updatePersona(Persona persona) throws BusinessException;
+	void updateAzienda(Azienda azienda) throws BusinessException;
 }

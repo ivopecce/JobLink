@@ -160,4 +160,31 @@ public class DBUtenteServiceImpl implements UtenteService {
 		
 	}
 
+	@Override
+	public void updatePersona(Persona persona) throws BusinessException {
+		try {
+			String sql = "CALL update_persona(?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, persona.getId());
+			ps.setString(2, persona.getCognome());
+			ps.setString(3, persona.getNome());
+			ps.setString(4, persona.getDataDiNascita().toString());
+			ps.setString(5, persona.getGenere().toString());
+			ps.setString(6, persona.getResidenza());
+			ps.setString(7, persona.getEmail());
+			ps.setString(8, persona.getTelefono());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
+		
+	}
+
+	@Override
+	public void updateAzienda(Azienda azienda) throws BusinessException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

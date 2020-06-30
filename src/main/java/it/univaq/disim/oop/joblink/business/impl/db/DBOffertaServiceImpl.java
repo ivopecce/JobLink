@@ -274,6 +274,60 @@ public class DBOffertaServiceImpl implements OffertaService {
 		}
 	}
 
+	@Override
+	public List<Offerta> findOfferteByTitolo(String titolo) throws BusinessException {
+		List<Offerta> result = new ArrayList();
+		try {
+			String sql = "CALL find_titolo(?)";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, titolo);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Offerta offerta = new Offerta();
+				offerta.setId(rs.getInt(1));
+				offerta.setDataCreazione(LocalDate.parse(rs.getDate(2).toString()));
+				offerta.setTitoloOfferta(rs.getString(3));
+				offerta.setTestoOfferta(rs.getString(4));
+				offerta.setLocalita(rs.getString(5));
+				if(rs.getString(6) == "ATTIVA") offerta.setStato(StatoOfferta.ATTIVA);
+				if(rs.getString(6) == "NON_ATTIVA") offerta.setStato(StatoOfferta.NON_ATTIVA);
+				offerta.setAzienda(new Azienda());
+				result.add(offerta);
+			}
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<Offerta> findOfferteByLocalita(String localita) throws BusinessException {
+		List<Offerta> result = new ArrayList();
+		try {
+			String sql = "CALL find_localita(?)";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setString(1, localita);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Offerta offerta = new Offerta();
+				offerta.setId(rs.getInt(1));
+				offerta.setDataCreazione(LocalDate.parse(rs.getDate(2).toString()));
+				offerta.setTitoloOfferta(rs.getString(3));
+				offerta.setTestoOfferta(rs.getString(4));
+				offerta.setLocalita(rs.getString(5));
+				if(rs.getString(6) == "ATTIVA") offerta.setStato(StatoOfferta.ATTIVA);
+				if(rs.getString(6) == "NON_ATTIVA") offerta.setStato(StatoOfferta.NON_ATTIVA);
+				offerta.setAzienda(new Azienda());
+				result.add(offerta);
+			}
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException(e);
+		}
+	}
+
 	
 	
 
