@@ -1,3 +1,6 @@
+/**
+ * Implementazione del service dei messaggi su database
+ */
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
@@ -82,20 +85,7 @@ public class DBMessaggiServiceImpl implements MessaggiService {
 		return result;
 	}
 	
-//	private List<Messaggio> createList(ResultSet rs) throws SQLException{
-//		List<Messaggio> result = new ArrayList<>();
-//		while(rs.next()) {
-//			Messaggio messaggio = new Messaggio();
-//			messaggio.setId(rs.getInt(1));
-//			messaggio.setOggetto(rs.getString(2));
-//			messaggio.setTesto(rs.getString(3));
-//			messaggio.setData(LocalDate.parse(rs.getString(4)));
-//			
-//		}
-//		return result;
-//		
-//	}
-	
+	/*Restituisce un oggetto di tipo Messaggio avendo in ingresso un ResultSet di una query sugli utenti presenti nel database*/
 	private Messaggio createMessaggio(ResultSet rs) throws SQLException{
 		Messaggio messaggio = new Messaggio();
 		messaggio.setId(rs.getInt(1));
@@ -106,6 +96,7 @@ public class DBMessaggiServiceImpl implements MessaggiService {
 		return messaggio;
 	}
 	
+	/*Restituisce un oggetto di tipo Utente avendo in ingresso l'ID*/
 	private Utente getUtente(int idUtente) throws SQLException{
 		Utente utente = new Utente();
 		String sql = "CALL get_utente(?);";

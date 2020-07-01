@@ -1,3 +1,7 @@
+/**
+ * Controller che permette di visualizzare e gestire tutte le skill richieste da un'offerta
+ */
+
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

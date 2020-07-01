@@ -1,3 +1,6 @@
+/**
+ * Controller dalla vista di un singolo messaggio
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
@@ -56,6 +59,7 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 		mittenteField.setText(messaggio.getMittente().getUsername());
 		destinatarioField.setText(messaggio.getDestinatario().getUsername());
 		if(messaggio.getId() != null) {
+			/*Se l'id del messaggio `e impostato permette di visualizzarlo ed eventualmente rispondere*/
 			oggettoField.setText(messaggio.getOggetto());
 			oggettoField.setEditable(false);
 			testoField.setText(messaggio.getTesto());
@@ -75,7 +79,12 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 			});
 		}
 		else {
-			if(!(messaggio.getOggetto().isEmpty())) {
+			/*Se l'id del messaggio non 'e impostato permette di comporre ed inviare un nuovo messaggio*/
+			if(!(messaggio.getOggetto().isEmpty())) { 
+				/*
+				 * Verifica se l'oggetto del messaggio e' impostato. In caso affermativo si tratta di una risposta ad un messaggio
+				 * quindi disabilita la possibilit`a di modificarne l'oggetto, altrimenti si tratta di una nuova conversazione, quindi permette la modifica dell'oggetto
+				 */
 				oggettoField.setText(messaggio.getOggetto());
 				oggettoField.setEditable(false);
 			}

@@ -1,3 +1,6 @@
+/**
+ * Connessione al database
+ */
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;

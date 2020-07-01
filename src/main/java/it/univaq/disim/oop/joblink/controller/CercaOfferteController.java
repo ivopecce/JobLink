@@ -1,3 +1,6 @@
+/**
+ * Controller della vista per la ricerca di offerte
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
@@ -47,6 +50,7 @@ public class CercaOfferteController implements Initializable, DataInitializable<
 		this.persona = persona;
 	}
 	
+	/*Ricerca delle offerte aventi nel titolo una stringa inserita dall'utente*/
 	@FXML
 	public void cercaTitoloAction(ActionEvent event) {
 		TemporaryObject tmp = new TemporaryObject();
@@ -55,6 +59,7 @@ public class CercaOfferteController implements Initializable, DataInitializable<
 		dispatcher.renderView("risultatiRicercaOfferte", tmp);
 	}
 	
+	/*Ricerca delle offerte aventi nella localita' una stringa inserita dall'utente*/
 	@FXML
 	public void cercaLocalitaAction(ActionEvent event) {
 		TemporaryObject tmp = new TemporaryObject();

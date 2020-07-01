@@ -1,7 +1,9 @@
+/**
+ * Controller della vista dei risultati di ricerca offerte effettuata da un'utente
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;

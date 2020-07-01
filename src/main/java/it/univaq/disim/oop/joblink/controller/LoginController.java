@@ -1,3 +1,6 @@
+/**
+ * Controller della vista login
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
@@ -58,7 +61,6 @@ public class LoginController implements Initializable, DataInitializable<Object>
 		
 		try {
 			Utente utente = utenteService.authenticate(username.getText(), password.getText());
-			
 			dispatcher.loggedIn(utente);
 		} catch (UtenteNotFoundException e) {
 			loginErrorLabel.setText("Username e/o password errati!");

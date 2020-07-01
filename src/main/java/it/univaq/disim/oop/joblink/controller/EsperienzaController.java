@@ -1,3 +1,6 @@
+/**
+ * Controller della vista di un'esperienza lavorativa passata in ingresso
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

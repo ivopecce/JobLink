@@ -1,3 +1,6 @@
+/**
+ * Controller della vista che permette all'azienda di visualizzare e modificare il proprio profilo
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

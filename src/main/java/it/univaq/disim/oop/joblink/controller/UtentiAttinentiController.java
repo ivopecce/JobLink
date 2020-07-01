@@ -1,3 +1,6 @@
+/**
+ * Controller della vista che visualizza gli utenti attinenti ad un'offerta
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

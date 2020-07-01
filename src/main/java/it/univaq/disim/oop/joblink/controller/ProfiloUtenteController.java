@@ -1,3 +1,6 @@
+/**
+ * Controller della vista che permette alla persona di visualizzare e modificare il proprio profilo ed il proprio curriculum
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 

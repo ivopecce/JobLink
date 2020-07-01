@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #76b1c3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.disim.oop.joblink.controller.LoginController">
+   <children>
+      <Label layoutX="440.0" layoutY="207.0" prefHeight="113.0" prefWidth="144.0" text="JobLink" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="427.0" layoutY="429.0" promptText="Username" />
+      <PasswordField fx:id="password" layoutX="427.0" layoutY="474.0" promptText="Password" />
+      <Button fx:id="loginButton" layoutX="485.0" layoutY="536.0" mnemonicParsing="false" onAction="#loginAction" text="Login" />
+      <Label fx:id="loginErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="354.0" layoutY="383.0" prefHeight="39.0" prefWidth="317.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="registraAziendaButton" layoutX="424.0" layoutY="580.0" mnemonicParsing="false" onAction="#registraAziendaAction" text="Registrati come azienda" />
+      <Button fx:id="registraPersonaButton" layoutX="423.0" layoutY="618.0" mnemonicParsing="false" onAction="#registraPersonaAction" text="Registrati come persona" />
+   </children>
+</AnchorPane>

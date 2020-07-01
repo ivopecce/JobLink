@@ -1,3 +1,6 @@
+/**
+ * Abstract factory dei services
+ */
 package it.univaq.disim.oop.joblink.business;
 
 import it.univaq.disim.oop.joblink.business.impl.db.DBJobLinkBusinessFactoryImpl;

@@ -1,3 +1,6 @@
+/**
+ * Interfaccia per i servizi utente
+ */
 package it.univaq.disim.oop.joblink.business;
 
 import java.sql.SQLException;

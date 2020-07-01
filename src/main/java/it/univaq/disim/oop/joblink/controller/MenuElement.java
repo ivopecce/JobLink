@@ -1,3 +1,6 @@
+/**
+ * Classe per il singolo elemento del menu
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 public class MenuElement {

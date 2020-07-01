@@ -1,3 +1,6 @@
+/**
+ * Impementazione per DB del service delle skill
+ */
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
@@ -23,6 +26,7 @@ public class DBSkillServiceImpl implements SkillService {
 		this.dbConnection = connection;
 	}
 	
+	/*Restituisce una stringa avente la concatenazione delle skill richieste per un'offerta lavorativa*/
 	@Override
 	public String skillRichieste(Offerta offerta) throws BusinessException {
 		String skillRichieste = new String();
@@ -39,6 +43,7 @@ public class DBSkillServiceImpl implements SkillService {
 		}
 	}
 	
+	/*Restituisce un ArrayList contenente tutte le skill richieste per un'offerta*/
 	@Override
 	public List<Richiesta> getSkillRichieste(Offerta offerta) throws BusinessException {
 		List<Richiesta> result = new ArrayList<>();
@@ -74,6 +79,7 @@ public class DBSkillServiceImpl implements SkillService {
 		}
 	}
 
+	/*Inserisce una nuova skill richiesta per un'offerta*/
 	@Override
 	public void createRichiesta(Richiesta richiesta) throws BusinessException {
 		try {
@@ -90,6 +96,7 @@ public class DBSkillServiceImpl implements SkillService {
 		
 	}
 
+	/*Aggiorna una richiesta di skill per un'offerta*/
 	@Override
 	public void updateRichiesta(Richiesta richiesta) throws BusinessException {
 		try {
@@ -106,6 +113,7 @@ public class DBSkillServiceImpl implements SkillService {
 		
 	}
 
+	/*Elimina una skill richiesta da un'offerta*/
 	@Override
 	public void deleteRichiesta(Richiesta richiesta) throws BusinessException {
 		try {
@@ -120,6 +128,7 @@ public class DBSkillServiceImpl implements SkillService {
 		
 	}
 
+	/*Crea una skill posseduta da una persona*/
 	@Override
 	public void createPossiede(Possiede possiede) throws BusinessException {
 		try {
@@ -136,6 +145,7 @@ public class DBSkillServiceImpl implements SkillService {
 		
 	}
 
+	/*Aggiorna una skill posseduta da una persona*/
 	@Override
 	public void updatePossiede(Possiede possiede) throws BusinessException {
 		try {
@@ -152,6 +162,7 @@ public class DBSkillServiceImpl implements SkillService {
 		
 	}
 
+	/*Elimina una skill posseduta da una persona*/
 	@Override
 	public void deletePossiede(Possiede possiede) throws BusinessException {
 		try {

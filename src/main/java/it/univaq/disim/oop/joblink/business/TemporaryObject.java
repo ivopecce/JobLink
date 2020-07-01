@@ -1,3 +1,6 @@
+/**
+ * Classe per la generazione di un oggetto temporaneo contenente altri oggetti e che viene usata per il passaggio di piu' oggetti da inizializzare in alcune viste
+ */
 package it.univaq.disim.oop.joblink.business;
 
 import it.univaq.disim.oop.joblink.domain.Offerta;

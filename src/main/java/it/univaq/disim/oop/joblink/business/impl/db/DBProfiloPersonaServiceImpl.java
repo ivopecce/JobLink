@@ -1,3 +1,6 @@
+/**
+ * Impementazione per database del service del profilo persona
+ */
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
@@ -25,6 +28,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		this.dbConnection = connection;
 	}
 
+	/*Restituisce tutte le esperienze formative della persona passata in ingresso*/
 	@Override
 	public List<Formazione> findAllFormazione(Persona persona) throws BusinessException {
 		List<Formazione> result = new ArrayList<>();
@@ -53,6 +57,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		}
 	}
 
+	/*Restituisce tutte le esperienze lavorative della persona in ingresso*/
 	@Override
 	public List<Esperienza> findAllEsperienza(Persona persona) throws BusinessException {
 		List<Esperienza> result = new ArrayList<>();
@@ -81,6 +86,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		}
 	}
 
+	/*Restituisce tutte le skill di una persona*/
 	@Override
 	public List<Possiede> findAllSkill(Persona persona) throws BusinessException {
 		List<Possiede> result = new ArrayList<>();
@@ -118,6 +124,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		}
 	}
 
+	/*Aggiunge una formazione ad una persona*/
 	@Override
 	public void createFormazione(Formazione formazione) throws BusinessException {
 		try {
@@ -140,6 +147,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		
 	}
 
+	/*Aggiorna un'esperienza formativa*/
 	@Override
 	public void updateFormazione(Formazione formazione) throws BusinessException {
 		try {
@@ -162,6 +170,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		
 	}
 
+	/*Elimina un'esperienza formativa*/
 	@Override
 	public void deleteFormazione(Formazione formazione) throws BusinessException {
 		try {
@@ -177,6 +186,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		
 	}
 
+	/*Aggiunge un'esperienza lavorativa di una persona*/
 	@Override
 	public void createEsperienza(Esperienza esperienza) throws BusinessException {
 		try {
@@ -199,6 +209,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		
 	}
 
+	/*Aggiorna un'esperienza lavorativa*/
 	@Override
 	public void updateEsperienza(Esperienza esperienza) throws BusinessException {
 		try {
@@ -221,6 +232,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		
 	}
 
+	/*Elimina un'esperienza lavorativa*/
 	@Override
 	public void deleteEsperienza(Esperienza esperienza) throws BusinessException {
 		try {

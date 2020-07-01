@@ -1,3 +1,6 @@
+/**
+ * Impementazione per database del service utente
+ */
 package it.univaq.disim.oop.joblink.business.impl.db;
 
 import java.sql.Connection;
@@ -23,6 +26,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		this.dbConnection = connection;
 	}
 
+	/*Login dell'utente e creazione dell'istanza Azienda o Persona*/
 	@Override
 	public Utente authenticate(String username, String password) throws UtenteNotFoundException, BusinessException {
 		try {
@@ -84,6 +88,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		}
 	}
 
+	/*Registradione di un'azienda al sistema*/
 	@Override
 	public void registerAzienda(String username, String password, String email, String telefono, String denominazione,
 			String sede, String settore, String sitoweb, Integer dipendenti) throws BusinessException {
@@ -109,6 +114,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		
 	}
 
+	/*Registrazione di una persona al sistema*/
 	@Override
 	public void registerPersona(String username, String password, String email, String telefono, String cognome,
 		String nome, LocalDate dataDiNascita, String genere, String residenza) throws BusinessException {
@@ -133,6 +139,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		
 	}
 	
+	/*Eliminazione di un utente (persona o azienda) dal sistema*/
 	@Override
 	public void deleteAccount(Utente utente) throws BusinessException{
 		try {
@@ -147,6 +154,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		
 	}
 
+	/*Aggiornamento del profilo di una persona*/
 	@Override
 	public void updatePersona(Persona persona) throws BusinessException {
 		try {
@@ -168,6 +176,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		
 	}
 
+	/*Aggiornamento del profilo di un'azienda*/
 	@Override
 	public void updateAzienda(Azienda azienda) throws BusinessException {
 		try {

@@ -1,3 +1,6 @@
+/**
+ * Controller della vista contenente il form di registrazione per le aziende
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

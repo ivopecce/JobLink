@@ -1,3 +1,6 @@
+/**
+ * Controller della vista della singola offerta lato azienda
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

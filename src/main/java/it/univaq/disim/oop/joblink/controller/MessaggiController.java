@@ -1,3 +1,6 @@
+/**
+ * Controller della vista contenente i messaggi inviati e ricevuti
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
@@ -9,7 +12,6 @@ import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.MessaggiService;
 import it.univaq.disim.oop.joblink.domain.Messaggio;
-import it.univaq.disim.oop.joblink.domain.Offerta;
 import it.univaq.disim.oop.joblink.domain.Utente;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.beans.property.SimpleObjectProperty;

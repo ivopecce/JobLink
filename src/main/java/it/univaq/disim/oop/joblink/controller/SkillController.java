@@ -1,3 +1,6 @@
+/**
+ * Controller che permette di gestire una skill posseduta dalla persona
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

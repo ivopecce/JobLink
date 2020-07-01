@@ -1,3 +1,6 @@
+/**
+ * Controller della vista candidati
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
@@ -8,7 +11,6 @@ import it.univaq.disim.oop.joblink.business.BusinessException;
 import it.univaq.disim.oop.joblink.business.JobLinkBusinessFactory;
 import it.univaq.disim.oop.joblink.business.OffertaService;
 import it.univaq.disim.oop.joblink.domain.Offerta;
-import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Risposta;
 import it.univaq.disim.oop.joblink.view.ViewDispatcher;
 import javafx.beans.property.SimpleObjectProperty;

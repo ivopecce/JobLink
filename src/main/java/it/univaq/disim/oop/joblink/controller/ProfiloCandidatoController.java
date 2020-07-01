@@ -1,3 +1,7 @@
+/**
+ * Controller della vista che permette di visualizzare il curriculum di una persona all'azienda e che ne permette di inviare messaggi alla persona
+ * I campi del CV sono generati dinamicamente
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;

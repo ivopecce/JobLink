@@ -1,3 +1,6 @@
+/**
+ * Interfaccia per i services delle skill
+ */
 package it.univaq.disim.oop.joblink.business;
 
 import java.util.List;

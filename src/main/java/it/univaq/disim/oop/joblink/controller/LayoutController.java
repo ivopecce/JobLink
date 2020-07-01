@@ -1,3 +1,6 @@
+/**
+ * Controller del layout dell'applicazione, sul quae si altreneranno le varie viste
+ */
 package it.univaq.disim.oop.joblink.controller;
 
 import java.net.URL;
