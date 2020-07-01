@@ -11,8 +11,7 @@ public interface UtenteService {
 	Utente authenticate(String username, String password) throws UtenteNotFoundException, BusinessException;
 	void registerAzienda(String username, String password, String email, String telefono, String denominazione, String sede, String settore, String sitoweb, Integer dipendenti) throws SQLException, BusinessException;
 	void registerPersona(String username, String password, String email, String telefono, String cognome, String nome, LocalDate dataDiNascita, String genere, String residenza) throws SQLException, BusinessException;
-	void deletePersona(Persona persona) throws BusinessException;
-	void deleteAzienda(Azienda azienda) throws BusinessException;
+	void deleteAccount(Utente utente) throws BusinessException;
 	void updatePersona(Persona persona) throws BusinessException;
 	void updateAzienda(Azienda azienda) throws BusinessException;
 }

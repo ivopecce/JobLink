@@ -39,7 +39,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="messaggiRicevutiTable1" prefHeight="464.0" prefWidth="730.0">
+                        <TableView fx:id="messaggiInviatiTable" prefHeight="464.0" prefWidth="730.0">
                            <columns>
                               <TableColumn fx:id="destinatarioColumn" prefWidth="167.0" text="A" />
                               <TableColumn fx:id="oggettoIColumn" prefWidth="328.0" text="Oggetto" />

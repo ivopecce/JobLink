@@ -125,7 +125,7 @@ public class DBSkillServiceImpl implements SkillService {
 		try {
 			String sql = "CALL create_possiede(?, ?, ?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, possiede.getPersona().getId());
+			ps.setInt(1, possiede.getPersona().getIdPersona());
 			ps.setString(2, possiede.getSkill().getSkill());
 			ps.setString(3, possiede.getLivelloPosseduto().toString());
 			ps.executeUpdate();

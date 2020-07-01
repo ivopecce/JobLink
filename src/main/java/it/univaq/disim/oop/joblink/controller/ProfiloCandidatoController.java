@@ -14,6 +14,7 @@ import it.univaq.disim.oop.joblink.domain.Esperienza;
 import it.univaq.disim.oop.joblink.domain.Formazione;
 import it.univaq.disim.oop.joblink.domain.Genere;
 import it.univaq.disim.oop.joblink.domain.LivelloSkill;
+import it.univaq.disim.oop.joblink.domain.Messaggio;
 import it.univaq.disim.oop.joblink.domain.Persona;
 import it.univaq.disim.oop.joblink.domain.Possiede;
 import it.univaq.disim.oop.joblink.domain.Risposta;
@@ -203,7 +204,11 @@ public class ProfiloCandidatoController implements Initializable, DataInitializa
 	
 	@FXML
 	public void contattaAction(ActionEvent event) {
-		
+		Messaggio messaggio = new Messaggio();
+		messaggio.setMittente(risposta.getOfferta().getAzienda());
+		messaggio.setDestinatario(persona);
+		messaggio.setOggetto("");
+		dispatcher.renderView("messaggio", messaggio);
 	}
 	
 	@FXML

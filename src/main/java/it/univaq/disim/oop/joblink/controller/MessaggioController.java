@@ -53,9 +53,9 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 	@Override
 	public void initializeData(Messaggio messaggio) {
 		this.messaggio = messaggio;
+		mittenteField.setText(messaggio.getMittente().getUsername());
+		destinatarioField.setText(messaggio.getDestinatario().getUsername());
 		if(messaggio.getId() != null) {
-			mittenteField.setText(messaggio.getMittente().getUsername());
-			destinatarioField.setText(messaggio.getDestinatario().getUsername());
 			oggettoField.setText(messaggio.getOggetto());
 			oggettoField.setEditable(false);
 			testoField.setText(messaggio.getTesto());
@@ -75,9 +75,7 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 			});
 		}
 		else {
-			mittenteField.setText(messaggio.getMittente().getUsername());
-			destinatarioField.setText(messaggio.getDestinatario().getUsername());
-			if(!messaggio.getOggetto().isEmpty()) {
+			if(!(messaggio.getOggetto().isEmpty())) {
 				oggettoField.setText(messaggio.getOggetto());
 				oggettoField.setEditable(false);
 			}
@@ -94,7 +92,7 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 						msg.setOggetto(oggettoField.getText());
 						msg.setTesto(testoField.getText());
 						messaggiService.sendMessaggio(msg);
-						dispatcher.renderView("messaggio", msg);
+						dispatcher.renderView("messaggi", messaggio.getMittente());
 					} catch (BusinessException e) {
 						dispatcher.renderError(e);
 					}
@@ -105,7 +103,8 @@ public class MessaggioController implements Initializable, DataInitializable<Mes
 	
 	@FXML
 	public void annullaAction(ActionEvent event) {
-		dispatcher.renderView("messaggi", offerta.getAzienda());
+		if(messaggio.getId() == null) dispatcher.renderView("messaggi", messaggio.getMittente());
+		else dispatcher.renderView("messaggi", messaggio.getDestinatario());
 	}
 
 }

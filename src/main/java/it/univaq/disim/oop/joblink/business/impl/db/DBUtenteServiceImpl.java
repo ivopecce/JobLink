@@ -47,13 +47,14 @@ public class DBUtenteServiceImpl implements UtenteService {
 				}
 				
 				if(utente != null) {
+					utente.setId(rs.getInt(12));
 					utente.setUsername(rs.getString(3));
 					utente.setPassword(rs.getString(4));
 					utente.setEmail(rs.getString(5));
 					utente.setTelefono(rs.getString(6));
 					
 					if(utente instanceof Azienda) {
-						utente.setId(rs.getInt(2));
+						((Azienda) utente).setIdAzienda(rs.getInt(2));
 						((Azienda) utente).setDenominazione(rs.getString(7));
 						((Azienda) utente).setSitoWeb(rs.getString(8));
 						((Azienda) utente).setSede(rs.getString(9));
@@ -61,7 +62,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 						((Azienda) utente).setNumeroDipendenti(rs.getInt(11));
 					}
 					if(utente instanceof Persona) {
-						utente.setId(rs.getInt(2));
+						((Persona) utente).setIdPersona(rs.getInt(2));
 						((Persona) utente).setCognome(rs.getString(7));
 						((Persona) utente).setNome(rs.getString(8));
 						LocalDate date;
@@ -131,27 +132,13 @@ public class DBUtenteServiceImpl implements UtenteService {
 		}
 		
 	}
-
+	
 	@Override
-	public void deletePersona(Persona persona) throws BusinessException{
+	public void deleteAccount(Utente utente) throws BusinessException{
 		try {
-			String sql = "CALL delete_persona(?);";
+			String sql = "CALL delete_account(?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, persona.getId());
-			ps.execute();
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BusinessException();
-		}
-		
-	}
-
-	@Override
-	public void deleteAzienda(Azienda azienda) throws BusinessException{
-		try {
-			String sql = "CALL delete_azienda(?);";
-			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, azienda.getId());
+			ps.setInt(1, utente.getId());
 			ps.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -165,7 +152,7 @@ public class DBUtenteServiceImpl implements UtenteService {
 		try {
 			String sql = "CALL update_persona(?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, persona.getId());
+			ps.setInt(1, persona.getIdPersona());
 			ps.setString(2, persona.getCognome());
 			ps.setString(3, persona.getNome());
 			ps.setString(4, persona.getDataDiNascita().toString());
@@ -183,7 +170,23 @@ public class DBUtenteServiceImpl implements UtenteService {
 
 	@Override
 	public void updateAzienda(Azienda azienda) throws BusinessException {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "CALL update_azienda(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement ps = dbConnection.prepareStatement(sql);
+			ps.setInt(1, azienda.getIdAzienda());
+			ps.setInt(2, azienda.getId());
+			ps.setString(3, azienda.getDenominazione());
+			ps.setString(4, azienda.getSede());
+			ps.setInt(5, azienda.getNumeroDipendenti());
+			ps.setString(6, azienda.getSettore());
+			ps.setString(7, azienda.getEmail());
+			ps.setString(8, azienda.getTelefono());
+			ps.setString(9, azienda.getSitoWeb());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException();
+		}
 		
 	}
 

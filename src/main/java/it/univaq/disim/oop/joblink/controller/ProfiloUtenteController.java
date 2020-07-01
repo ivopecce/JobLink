@@ -257,7 +257,7 @@ public class ProfiloUtenteController implements Initializable, DataInitializable
 	
 	public void eliminaUtenteAction(ActionEvent event) {
 		try {
-			utenteService.deletePersona(persona);
+			utenteService.deleteAccount(persona);
 			dispatcher.logout();
 		} catch (BusinessException e) {
 			e.printStackTrace();

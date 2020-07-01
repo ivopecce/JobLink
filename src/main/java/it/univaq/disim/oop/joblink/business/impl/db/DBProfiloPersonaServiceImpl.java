@@ -31,7 +31,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		try {
 			String sql = "CALL find_formazione(?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(persona.getId(), 1);
+			ps.setInt(persona.getIdPersona(), 1);
 			ps.execute();
 			ResultSet rs = ps.getResultSet();
 			while(rs.next()) {
@@ -59,7 +59,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		try {
 			String sql = "CALL find_esperienza(?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(persona.getId(), 1);
+			ps.setInt(persona.getIdPersona(), 1);
 			ps.execute();
 			ResultSet rs = ps.getResultSet();
 			while(rs.next()) {
@@ -87,7 +87,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 		try {
 			String sql = "CALL find_skill(?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(persona.getId(), 1);
+			ps.setInt(persona.getIdPersona(), 1);
 			ps.execute();
 			ResultSet rs = ps.getResultSet();
 			while(rs.next()) {
@@ -130,7 +130,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 			if(formazione.getDataFine().equals(null)) ps.setString(5, null);
 			else ps.setString(5, formazione.getDataFine().toString());
 			ps.setInt(6, formazione.getVoto());
-			ps.setInt(7, formazione.getPersona().getId());
+			ps.setInt(7, formazione.getPersona().getIdPersona());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -189,7 +189,7 @@ public class DBProfiloPersonaServiceImpl implements ProfiloPersonaService {
 			if(esperienza.getDataFine() == null) ps.setString(5, null);
 			else ps.setString(5, esperienza.getDataFine().toString());
 			ps.setString(6, esperienza.getLocalita());
-			ps.setInt(7, esperienza.getPersona().getId());
+			ps.setInt(7, esperienza.getPersona().getIdPersona());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {

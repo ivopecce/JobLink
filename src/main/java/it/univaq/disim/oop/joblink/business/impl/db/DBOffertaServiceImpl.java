@@ -52,31 +52,6 @@ public class DBOffertaServiceImpl implements OffertaService {
 		
 		return result;
 	} 
-
-	@Override
-	public Offerta findOffertaById(int id) throws BusinessException {
-		Offerta result = new Offerta();
-		try {
-			String sql = "SELECT * FROM Offerta WHERE idOfferta = ?";
-			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
-			
-			result.setId(rs.getInt(1));
-			result.setDataCreazione(LocalDate.parse(rs.getDate(2).toString()));
-			result.setTitoloOfferta(rs.getString(3));
-			result.setTestoOfferta(rs.getString(4));
-			result.setLocalita(rs.getString(5));
-			if(rs.getString(6) == "ATTIVA") result.setStato(StatoOfferta.ATTIVA);
-			if(rs.getString(6) == "NON_ATTIVA") result.setStato(StatoOfferta.NON_ATTIVA);
-			result.setAzienda(new Azienda());
-			return result;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new BusinessException(e);
-		}
-				
-	}
 	
 	@Override
 	public List<Offerta> findOfferteAttinenti(Persona persona) throws BusinessException {
@@ -84,7 +59,7 @@ public class DBOffertaServiceImpl implements OffertaService {
 		try {
 			String sql = "CALL offerte_attinenti(?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			ps.setInt(1, persona.getId());
+			ps.setInt(1, persona.getIdPersona());
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Offerta offerta = new Offerta();
@@ -114,14 +89,13 @@ public class DBOffertaServiceImpl implements OffertaService {
 			String sql = "INSERT INTO Offerta(dataCreazione, titoloOfferta, testoOfferta, localita, stato, idAzienda) "+
 					"VALUES(?, ?, ?, ?, ?, ?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			ps.setString(1, format.format(offerta.getDataCreazione()));
+			ps.setString(1, offerta.getDataCreazione().toString());
 			ps.setString(2, offerta.getTitoloOfferta());
 			ps.setString(3, offerta.getTestoOfferta());
 			ps.setString(4, offerta.getLocalita());
 			if(offerta.getStato().equals(StatoOfferta.ATTIVA)) ps.setString(5, "ATTIVA");
 			if(offerta.getStato().equals(StatoOfferta.NON_ATTIVA)) ps.setString(5, "NON_ATTIVA");
-			ps.setInt(6, offerta.getAzienda().getId());
+			ps.setInt(6, offerta.getAzienda().getIdAzienda());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,7 +143,7 @@ public class DBOffertaServiceImpl implements OffertaService {
 			String sql = "CALL set_candidatura(?, ?, ?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
 			ps.setInt(1, offerta.getId());
-			ps.setInt(2, persona.getId());
+			ps.setInt(2, persona.getIdPersona());
 			ps.setBoolean(3, candidatura);
 			ps.execute();
 		}catch (SQLException e) {
@@ -185,7 +159,7 @@ public class DBOffertaServiceImpl implements OffertaService {
 			String sql = "CALL get_candidatura(?, ?);";
 			PreparedStatement ps = dbConnection.prepareStatement(sql);
 			ps.setInt(2, offerta.getId());
-			ps.setInt(1, persona.getId());
+			ps.setInt(1, persona.getIdPersona());
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				if(!rs.getString(1).isEmpty()) candidato = true;
@@ -210,7 +184,9 @@ public class DBOffertaServiceImpl implements OffertaService {
 				Risposta risposta = new Risposta();
 				risposta.setOfferta(offerta);
 				risposta.setPersona(new Persona());
-				risposta.getPersona().setId(rs.getInt(1));
+				risposta.getPersona().setId(rs.getInt(9));
+				risposta.getPersona().setIdPersona(rs.getInt(1));
+				risposta.getPersona().setUsername(rs.getString(10));
 				risposta.getPersona().setCognome(rs.getString(2));
 				risposta.getPersona().setNome(rs.getString(3));
 				risposta.getPersona().setDataDiNascita(LocalDate.parse(rs.getString(4)));
@@ -247,7 +223,9 @@ public class DBOffertaServiceImpl implements OffertaService {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Persona persona = new Persona();
-				persona.setId(rs.getInt(1));
+				persona.setIdPersona(rs.getInt(1));
+				persona.setId(rs.getInt(9));
+				persona.setUsername(rs.getString(10));
 				persona.setCognome(rs.getString(2));
 				persona.setNome(rs.getString(3));
 				persona.setDataDiNascita(LocalDate.parse(rs.getString(4)));

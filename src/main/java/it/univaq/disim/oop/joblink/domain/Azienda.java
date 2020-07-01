@@ -1,6 +1,7 @@
 package it.univaq.disim.oop.joblink.domain;
 
 public class Azienda extends Utente {
+	private Integer idAzienda;
 	private String denominazione;
 	private String sede;
 	private Integer numeroDipendenti;
@@ -8,6 +9,12 @@ public class Azienda extends Utente {
 	private String sitoWeb;
 	
 	
+	public Integer getIdAzienda() {
+		return idAzienda;
+	}
+	public void setIdAzienda(Integer idAzienda) {
+		this.idAzienda = idAzienda;
+	}
 	public String getDenominazione() {
 		return denominazione;
 	}

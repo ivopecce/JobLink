@@ -34,7 +34,7 @@ CREATE TABLE `Azienda` (
   `idUtente` int NOT NULL,
   PRIMARY KEY (`idAzienda`),
   KEY `idUtente_idx` (`idUtente`),
-  CONSTRAINT `idUtente` FOREIGN KEY (`idUtente`) REFERENCES `Utente` (`idUtente`)
+  CONSTRAINT `idUtente` FOREIGN KEY (`idUtente`) REFERENCES `Utente` (`idUtente`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -44,7 +44,7 @@ CREATE TABLE `Azienda` (
 
 LOCK TABLES `Azienda` WRITE;
 /*!40000 ALTER TABLE `Azienda` DISABLE KEYS */;
-INSERT INTO `Azienda` VALUES (1,'Telespazio','Fucino',5000,'Telecomunicazioni','www.telespazio.com',1),(2,'LFoundry','Avezzano',1200,'Elettronico','www.lfoundry.com',3);
+INSERT INTO `Azienda` VALUES (1,'Telespazio','Fucino',5000,'Telecomunicazioni','www.telespazio.com',1);
 /*!40000 ALTER TABLE `Azienda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,21 +123,15 @@ CREATE TABLE `Messaggio` (
   `idMessaggio` int NOT NULL AUTO_INCREMENT,
   `oggetto` varchar(100) NOT NULL,
   `testo` text NOT NULL,
-  `idPersona` int NOT NULL,
-  `idAzienda` int NOT NULL,
+  `data` date NOT NULL,
   `mittente` int NOT NULL,
   `destinatario` int NOT NULL,
-  `data` date NOT NULL,
   PRIMARY KEY (`idMessaggio`),
-  KEY `idPersona_idx` (`idPersona`),
-  KEY `idAzienda_idx` (`idAzienda`),
   KEY `mittente_idx` (`mittente`),
   KEY `destinatario_idx` (`destinatario`),
   CONSTRAINT `destinatario` FOREIGN KEY (`destinatario`) REFERENCES `Utente` (`idUtente`),
-  CONSTRAINT `idAzienda` FOREIGN KEY (`idAzienda`) REFERENCES `Azienda` (`idAzienda`),
-  CONSTRAINT `idPersona` FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `mittente` FOREIGN KEY (`mittente`) REFERENCES `Utente` (`idUtente`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,6 +140,7 @@ CREATE TABLE `Messaggio` (
 
 LOCK TABLES `Messaggio` WRITE;
 /*!40000 ALTER TABLE `Messaggio` DISABLE KEYS */;
+INSERT INTO `Messaggio` VALUES (3,'test','prova di invio messaggio','2020-07-01',1,2),(4,'test','prova di risposta','2020-07-01',2,1);
 /*!40000 ALTER TABLE `Messaggio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +162,7 @@ CREATE TABLE `Offerta` (
   PRIMARY KEY (`idOfferta`),
   KEY `idAzienda_idx` (`idAzienda`),
   CONSTRAINT `idAziend` FOREIGN KEY (`idAzienda`) REFERENCES `Azienda` (`idAzienda`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +171,7 @@ CREATE TABLE `Offerta` (
 
 LOCK TABLES `Offerta` WRITE;
 /*!40000 ALTER TABLE `Offerta` DISABLE KEYS */;
-INSERT INTO `Offerta` VALUES (1,'2020-05-01','Tecnico operatore','Si cerca tecnico operatore da inserire in turno. Richiesto diploma','Fucino','ATTIVA',1),(2,'2019-01-05','Specialista networking','Si cerca spcialista in netowrking. Richiesta certificazione CCNA.','Fucino','NON_ATTIVA',1),(4,'2020-06-17','Cercasi carrellista','Si ricerca carrelista da inserire in turno in produzione','Avezzano','ATTIVA',2);
+INSERT INTO `Offerta` VALUES (1,'2020-05-01','Tecnico operatore','Si cerca tecnico operatore da inserire in turno. Richiesto diploma','Fucino','ATTIVA',1),(2,'2019-01-05','Specialista networking','Si cerca spcialista in netowrking. Richiesta certificazione CCNA.','Fucino','NON_ATTIVA',1);
 /*!40000 ALTER TABLE `Offerta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +202,7 @@ CREATE TABLE `Persona` (
 
 LOCK TABLES `Persona` WRITE;
 /*!40000 ALTER TABLE `Persona` DISABLE KEYS */;
-INSERT INTO `Persona` VALUES (1,'Pecce','Ivo','1990-10-01','MASCHIO','Avezzano',2),(2,'Pecce','Ivo','1986-06-19','MASCHIO','Italia',4);
+INSERT INTO `Persona` VALUES (1,'Pecce','Ivo','1990-10-01','MASCHIO','Avezzano',2);
 /*!40000 ALTER TABLE `Persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +343,7 @@ CREATE TABLE `Utente` (
 
 LOCK TABLES `Utente` WRITE;
 /*!40000 ALTER TABLE `Utente` DISABLE KEYS */;
-INSERT INTO `Utente` VALUES (1,'azienda','azienda','info@telespazio.com','+390863100000','azienda'),(2,'persona','persona','email@esempio.it','+390863000000','persona'),(3,'lfoundry','lfoundry','info@lfoundry.com','+390863222222','azienda'),(4,'ivopecce','ivopecce','test@email.it','+393333333333','persona');
+INSERT INTO `Utente` VALUES (1,'azienda','azienda','info@telespazio.com','+390863100000','azienda'),(2,'persona','persona','email@esempio.it','+390863000000','persona');
 /*!40000 ALTER TABLE `Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -451,7 +446,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `delete_azienda` */;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_account` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -461,11 +456,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_azienda`(_idAzienda integer)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_account`(_idUtente integer)
 BEGIN
-	DECLARE _idUtente integer;
-    SET _idUtente = (SELECT idUtente FROM Azienda WHERE Azienda.idAzienda = _idAzienda);
-    DELETE FROM Utente WHERE idUtente = _idUtente;
+	DELETE FROM Utente WHERE idUtente=_idUtente;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -504,27 +497,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_formazione`(_idFormazione integer)
 BEGIN
 	DELETE FROM Formazione WHERE idFormazione=_idFormazione;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `delete_persona` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_persona`(_idPersona integer)
-BEGIN
-	DECLARE _idUtente integer;
-    SET _idUtente = (SELECT idUtente FROM Persona WHERE Persona.idPersona = _idPersona);
-    DELETE FROM Utente WHERE idUtente = _idUtente;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -665,7 +637,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_candidati`(_idOfferta integer)
 BEGIN
-	SELECT DISTINCT Persona.idPersona, cognome, nome, dataDiNascita, genere, residenza, email, telefono
+	SELECT DISTINCT Persona.idPersona, cognome, nome, dataDiNascita, genere, residenza, email, telefono, Utente.idUtente, Utente.username
     FROM Persona INNER JOIN Risposta ON Persona.idPersona=Risposta.idPersona INNER JOIN Utente ON Persona.idUtente = Utente.idUtente
     WHERE Risposta.idOfferta=_idOfferta;
 END ;;
@@ -693,6 +665,44 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_messaggi_inviati` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_messaggi_inviati`(_idUtente integer)
+BEGIN
+	SELECT * FROM Messaggio WHERE mittente = _idUtente;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_messaggi_ricevuti` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_messaggi_ricevuti`(_idUtente integer)
+BEGIN
+	SELECT * FROM Messaggio WHERE destinatario = _idUtente;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_skill_richieste` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -708,6 +718,25 @@ BEGIN
 	SELECT Richiesta.idRichiesta, Skill.idSkill, Skill.skill, Richiesta.livelloRichiesto
     FROM Richiesta INNER JOIN Skill ON Skill.idSkill=Richiesta.idSkill
     WHERE Richiesta.idOfferta = _idOfferta;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_utente` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_utente`(_idUtente integer)
+BEGIN
+	SELECT * FROM Utente WHERE idUtente = _idUtente;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -730,12 +759,12 @@ BEGIN
     SET _tipologia = (SELECT tipologia FROM Utente WHERE username=_username and password=_password);
     IF _tipologia = "azienda" THEN
     BEGIN
-		SELECT tipologia, Azienda.idAzienda, username, password, email, telefono, denominazione, sitoweb, sede, settore, numeroDipendenti 
+		SELECT tipologia, Azienda.idAzienda, username, password, email, telefono, denominazione, sitoweb, sede, settore, numeroDipendenti , Utente.idUtente
         FROM (Utente INNER JOIN Azienda ON Utente.idUtente=Azienda.idUtente) WHERE username=_username and password=_password;
     END;
     END IF;
 	IF _tipologia = "persona" THEN BEGIN
-		SELECT tipologia, Persona.idPersona, username, password, email, telefono, cognome, nome, dataDiNascita, genere, residenza
+		SELECT tipologia, Persona.idPersona, username, password, email, telefono, cognome, nome, dataDiNascita, genere, residenza, Utente.idUtente
         FROM (Utente INNER JOIN Persona ON Utente.idUtente=Persona.idUtente) WHERE username=_username and password=_password;
 	END;
 	END IF;
@@ -781,7 +810,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `persone_attinenti`(_idOfferta integer)
 BEGIN
-	SELECT DISTINCT Persona.idPersona, cognome, nome, dataDiNascita, genere, residenza, email, telefono
+	SELECT DISTINCT Persona.idPersona, cognome, nome, dataDiNascita, genere, residenza, email, telefono, Utente.idUtente, Utente.username
     FROM Persona INNER JOIN Possiede ON Persona.idPersona=Possiede.idPersona INNER JOIN Skill ON Skill.idSkill=Possiede.idSkill INNER JOIN Richiesta ON Richiesta.idSkill=Possiede.idSkill INNER JOIN Utente ON Persona.idUtente=Utente.idUtente
     WHERE Richiesta.idOfferta=_idOfferta;
 END ;;
@@ -854,6 +883,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `send_messaggio` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `send_messaggio`(_oggetto char(100), _testo text, _mittente integer, _destinatario integer)
+BEGIN
+	INSERT INTO Messaggio(oggetto, testo, mittente, destinatario, data) VALUES (_oggetto, _testo, _mittente, _destinatario, current_date());
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `set_candidatura` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -892,6 +940,26 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `skill_richieste`(_idOfferta integer)
 BEGIN
 	SELECT skillRichieste FROM (SELECT group_concat(skill separator ", ") AS skillRichieste FROM Skill INNER JOIN Richiesta ON Skill.idSkill=Richiesta.idSkill WHERE Richiesta.idOfferta=_idOfferta) Richieste;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_azienda` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_azienda`(_idAzienda integer, _idUtente integer, _denominazione char(45), _sede char(45), _dipendenti integer, _settore char(45), _email char(45), _telefono char(45) , _sito char(45))
+BEGIN
+	UPDATE Utente SET email=_email, telefono=_telefono WHERE idUtente=_idUtente;
+    UPDATE Azienda SET denominazione=_denominazione, sede=_sede, numeroDipendenti=_dipendenti, settore=_settore, sitoweb=_sito WHERE idAzienda=_idAzienda;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1022,4 +1090,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-30 19:23:32
+-- Dump completed on 2020-07-01 13:17:07

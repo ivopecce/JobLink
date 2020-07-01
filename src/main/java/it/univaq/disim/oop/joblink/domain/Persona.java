@@ -4,12 +4,19 @@ import java.time.LocalDate;
 
 
 public class Persona extends Utente {
+	private Integer idPersona;
 	private String cognome;
 	private String nome;
 	private LocalDate dataDiNascita;
 	private Genere genere;
 	private String residenza;
 	
+	public Integer getIdPersona() {
+		return idPersona;
+	}
+	public void setIdPersona(Integer idPersona) {
+		this.idPersona = idPersona;
+	}
 	public String getCognome() {
 		return cognome;
 	}

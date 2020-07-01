@@ -23,6 +23,7 @@ public class DBJobLinkBusinessFactoryImpl extends JobLinkBusinessFactory{
 		offertaService = new DBOffertaServiceImpl(dbConnector.getConnection());
 		profiloPersonaService = new DBProfiloPersonaServiceImpl(dbConnector.getConnection());
 		skillService = new DBSkillServiceImpl(dbConnector.getConnection());
+		messaggiService = new DBMessaggiServiceImpl(dbConnector.getConnection());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

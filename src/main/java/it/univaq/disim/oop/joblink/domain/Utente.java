@@ -6,6 +6,7 @@ public class Utente {
 	private String password;
 	private String email;
 	private String telefono;
+	private String tipologia;
 	
 	
 	public Integer getId() {
@@ -37,6 +38,12 @@ public class Utente {
 	}
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+	public String getTipologia() {
+		return tipologia;
+	}
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
 	}
 	
 	
